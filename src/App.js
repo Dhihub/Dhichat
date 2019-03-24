@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+
 import './App.css';
 import io from 'socket.io-client';
+//import FixedWrapper from './Components/FixedWrapper/FixedWrapper'
+import {FixedWrapper,SampleMaximized} from '@livechat/ui-kit'
 
 
 const socket = io('http://localhost:5000/');
@@ -57,7 +59,18 @@ socket.on('ack',(message)=>{
 
     </div>
 
+<FixedWrapper.Root>
 
+      <p>{'FixedWrapper.Maximized'}</p>
+      <p>
+        This is sample FixedWrapper component. It shows widget placed as fixed
+        on your website. It has two stated - maximized and minimized.
+      </p>
+  
+
+
+
+</FixedWrapper.Root>
 
       </div>
     );
