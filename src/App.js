@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 
 import './App.css';
 import io from 'socket.io-client';
-//import FixedWrapper from './Components/FixedWrapper/FixedWrapper'
+import {Route} from 'react-router-dom'
+
 import {FixedWrapper,SampleMaximized} from '@livechat/ui-kit'
+
 import Chat from './Components/Chat/Chat'
+import Signin from './Components/Auth/Signin'
 
 
 const socket = io('http://localhost:5000/');
@@ -35,18 +38,17 @@ socket.on('ack',(message)=>{
   }
   render() {
 
-    
+
 
     return (
+
   <div>
 
-    <Chat/>
-
-
-
-
+    <Route exact path ='/' component = {Signin}/>
+      <Route exact path ='/chat' component = {Chat}/>
 
       </div>
+
     );
   }
 }

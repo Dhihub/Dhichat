@@ -1,0 +1,6 @@
+
+
+export const SET_NAME_FIELD = 'SET_NAME_FIELD'
+export const SET_TYPE_FIELD = 'SET_TYPE_FIELD'
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+export const SIGNIN_REQUESTED = 'SIGNIN_REQUESTED'
