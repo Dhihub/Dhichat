@@ -1,8 +1,10 @@
 import {SIGNIN_REQUESTED,LOGIN_SUCCESS} from '../constants/constants.js'
 import axios from 'axios'
 
- import {delay} from 'redux-saga'
-import {takeEvery,put,call,take,fork,cancelled,cancel} from 'redux-saga/effects';
+ import {delay,eventChannel} from 'redux-saga'
+import {takeEvery,put,call,take,fork,cancelled,cancel,all,apply} from 'redux-saga/effects';
+
+import {createWebSocketConnection} from '../socketConnection'
 
 
 
@@ -38,13 +40,7 @@ import {takeEvery,put,call,take,fork,cancelled,cancel} from 'redux-saga/effects'
 
     }
 
-
-
-
     }
-
-
-
 
 
 
@@ -68,13 +64,118 @@ export function* loginFlow(){
       }
 
 
-
-
-
    }
 
 
+}
 
 
+
+function createSocketChannel(socket){
+
+   return eventChannel(emit=>{
+
+
+     const initialHandler = (event)=>{
+
+
+       emit({type:'INITIAL_RECIEVED',payload:event})
+     }
+     const messageHandler =(event)=>{
+       emit({type:'MESSAGE_RECIEVED',payload:event})
+     }
+
+    const errorHandler = (errorEvent)=>{
+
+    emit(new Error(errorEvent.reason))
+
+
+ }
+
+socket.on('initial',initialHandler)
+socket.on('message',messageHandler)
+socket.on('error',errorHandler)
+
+const unsubscribe =()=>{
+
+  socket.off('ping',messageHandler)
+
+}
+
+return unsubscribe;
+
+
+   })
+
+
+
+
+
+}
+
+
+export function* watchOnPings(){
+
+     const socket = yield call(createWebSocketConnection)
+
+     yield put({type:'SET_SOCKET',payload:socket})
+
+     const socketChannel = yield call(createSocketChannel,socket)
+
+
+
+     while(true){
+
+    try{
+
+      const data = yield take(socketChannel)
+
+      yield put({type:data.type,payload:data.payload})
+
+
+
+    }catch(err){
+      console.error('socket err',err)
+    }
+
+
+
+
+
+
+     }
+
+}
+
+function* sendMessage(payload){
+
+
+
+  yield apply(payload.socket,payload.socket.emit,['message',payload.messageInput])
+
+  yield put({type:"CLEAR_MESSAGE_FIELD"})
+
+
+
+}
+export function* sendMessageListener(){
+ while(true){
+
+  const {payload} = yield take('SEND_MESSAGE_REQUESTED')
+
+  yield fork(sendMessage,payload)
+}
+}
+
+
+export function* rootSaga(){
+
+   yield all([
+  //fork(watchOnPings),
+  fork(loginFlow),
+  //fork(sendMessageListener)
+
+
+   ])
 
 }

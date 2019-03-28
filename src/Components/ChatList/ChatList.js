@@ -8,7 +8,7 @@ import React,{Component} from 'react'
 
 render(){
   return (
-    <div>chat list</div>
+    <div></div>
   )
 }
 

@@ -3,6 +3,21 @@ import {AgentBar,Column,Title,Avatar,FixedWrapper, MessageList as List,Message,M
   MessageText,TextComposer,Row,IconButton,AddIcon,TextInput,SendButton,EmojiIcon
 
 } from '@livechat/ui-kit'
+import {connect} from 'react-redux'
+
+
+ const mapStateToProps =(state)=>{
+
+
+
+   return {
+     socket: state.socketReducer.socket,
+     messageInput: state.inputfieldReducer.messageInput
+   }
+ }
+
+
+
 
 
 
@@ -17,9 +32,12 @@ class MessageList extends Component {
 
   render(){
 
+  const  {socket,dispatch,messageInput} = this.props;
+
+console.log(messageInput)
 return(
 
-<div>
+<div style={{height:'500px'}}>
 
 <AgentBar>
   <Avatar imgUrl="https://livechat.s3.amazonaws.com/default/avatars/male_8.jpg" />
@@ -53,13 +71,25 @@ return(
 
 </List>
 
-<TextComposer defaultValue="Hello, can you help me?">
+<TextComposer onChange= {
+  (e)=> {
+
+    return dispatch({type:'SET_MESSAGE_FIELD',payload:e.target.value})}
+
+}  onClick= {(e)=>{
+
+    console.log('socket ',socket)
+    console.log('message',messageInput)
+
+    if(messageInput.length>1){
+
+  return dispatch({type:'SEND_MESSAGE_REQUESTED',payload:{socket,messageInput}})}}} >
   <Row align="center">
     <IconButton fit>
       <AddIcon />
     </IconButton>
-    <TextInput fill />
-    <SendButton fit />
+    <TextInput   />
+    <SendButton   fit />
   </Row>
 
   <Row verticalAlign="center" justify="right">
@@ -81,4 +111,4 @@ return(
 }
 
 
-export default MessageList
+export default connect(mapStateToProps,null)(MessageList)

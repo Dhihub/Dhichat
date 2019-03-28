@@ -3,9 +3,11 @@ import React, { Component } from 'react';
 import './App.css';
 import io from 'socket.io-client';
 import {Route} from 'react-router-dom'
-
+import firebase from 'firebase/app'
+import database from 'firebase/database'
 import {FixedWrapper,SampleMaximized} from '@livechat/ui-kit'
 
+import config from './firebaseConfig'
 import Chat from './Components/Chat/Chat'
 import Signin from './Components/Auth/Signin'
 
@@ -22,18 +24,7 @@ class App extends Component {
 
   componentDidMount(){
 
-socket.on('ack',(message)=>{
-
- console.log(message)
-   let messages = this.state.messages;
-   messages.push(message)
-   this.setState({messages:messages})
-  console.log('message', this.state.message)
-})
-
-
-
-
+  firebase.initializeApp(config)
 
   }
   render() {

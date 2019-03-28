@@ -9,7 +9,7 @@ const [text] = useState('info section')
   return (
 
 
-   <div>{text}</div>
+   <div></div>
 
 
 
