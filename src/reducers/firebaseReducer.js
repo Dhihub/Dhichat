@@ -11,11 +11,11 @@ export default (state=initialSocketState,action ={})=>{
 
   switch(action.type){
 
-    case 'SET_SOCKET':
+    case 'SET_FIREBASE_DB':
 
-    console.log('socket',action.payload)
+    console.log('db',action.payload)
 
-    return {...state,socket:action.payload}
+    return {...state,firebaseDB:action.payload}
 
 
  case 'INITIAL_RECIEVED':

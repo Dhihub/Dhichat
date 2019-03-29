@@ -4,7 +4,7 @@ import {Provider} from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
 import {BrowserRouter as Router} from 'react-router-dom'
 import SigninReducer from './reducers/SigninReducer'
-import socketReducer from './reducers/socketReducer'
+import firebaseReducer from './reducers/firebaseReducer'
 import inputfieldReducer from './reducers/inputfieldReducer'
 import {ThemeProvider,darkTheme,elegantTheme,purpleTheme} from '@livechat/ui-kit'
 
@@ -12,7 +12,7 @@ import theme from './chatKitTheme.js'
 import App from './App'
 import {loginFlow,watchOnPings,rootSaga} from './sagas/saga.js'
 
-const rootReducer = combineReducers({SigninReducer,socketReducer,inputfieldReducer})
+const rootReducer = combineReducers({SigninReducer,firebaseReducer,inputfieldReducer})
  const sagaMiddleware = createSagaMiddleware();
 
  const store =createStore(

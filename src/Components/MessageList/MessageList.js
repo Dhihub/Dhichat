@@ -11,7 +11,7 @@ import {connect} from 'react-redux'
 
 
    return {
-     socket: state.socketReducer.socket,
+
      messageInput: state.inputfieldReducer.messageInput
    }
  }
@@ -83,7 +83,7 @@ return(
 
     if(messageInput.length>1){
 
-  return dispatch({type:'SEND_MESSAGE_REQUESTED',payload:{socket,messageInput}})}}} >
+  return }}} >
   <Row align="center">
     <IconButton fit>
       <AddIcon />

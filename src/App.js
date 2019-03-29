@@ -6,25 +6,50 @@ import {Route} from 'react-router-dom'
 import firebase from 'firebase/app'
 import database from 'firebase/database'
 import {FixedWrapper,SampleMaximized} from '@livechat/ui-kit'
+import {connect} from 'react-redux'
 
 import config from './firebaseConfig'
 import Chat from './Components/Chat/Chat'
 import Signin from './Components/Auth/Signin'
+import {setFirebaseDB } from './actions/firebaseDBactions.js'
 
 
 const socket = io('http://localhost:5000/');
 
 class App extends Component {
 
+  constructor(){
+    super();
+  firebase.initializeApp(config)
 
-  state = {
-    messages: [],
-    message:''
+
+
+  //this.firebaseDB  = firebase.database();
+
+
+    this.state = {
+      messages: [],
+      message:''
+    }
   }
+
+
 
   componentDidMount(){
 
-  firebase.initializeApp(config)
+
+
+
+  // var ref = this.firebaseDB.ref();
+  // var usersRef = ref.child('users');
+  //
+  //  console.log(usersRef.push({"name":"alwin","staff":false}))
+  //  console.log(usersRef)
+
+  this.props.setFirebaseDB(firebase.database())
+
+
+
 
   }
   render() {
@@ -44,4 +69,18 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state)=>{
+
+  return {
+    firebaseDB: state.firebaseReducer.firebaseDB
+  }
+
+}
+
+const mapDispatchToProps = (dispatch) =>{
+  return {
+    setFirebaseDB: (firebaseDB)=> dispatch(setFirebaseDB(firebaseDB))
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(App);
