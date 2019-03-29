@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 
 import './App.css';
 import io from 'socket.io-client';
-import {Route} from 'react-router-dom'
-import firebase from 'firebase/app'
-import database from 'firebase/database'
+import {Route,Redirect} from 'react-router-dom'
+import firebase from 'firebase'
+
 import {FixedWrapper,SampleMaximized} from '@livechat/ui-kit'
 import {connect} from 'react-redux'
 
@@ -13,8 +13,30 @@ import Chat from './Components/Chat/Chat'
 import Signin from './Components/Auth/Signin'
 import {setFirebase,setFirebaseDB } from './actions/firebaseDBactions.js'
 
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
-const socket = io('http://localhost:5000/');
+
+firebase.initializeApp(config)
+
+const uiConfig = {
+ // Popup signin flow rather than redirect flow.
+ signInFlow: 'popup',
+ // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
+ signInSuccessUrl: '/chat',
+ // We will display Google and Facebook as auth providers.
+ signInOptions: [
+   firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+   firebase.auth.FacebookAuthProvider.PROVIDER_ID
+
+ ],
+ // callbacks: {
+ //      // Avoid redirects after sign-in.
+ //      signInSuccessWithAuthResult: () => false,
+ //      redirect: ()=>{
+ //        return <Redirect to ='/signin'/>
+ //      }
+ //    }
+};
 
 class App extends Component {
 
@@ -35,12 +57,7 @@ class App extends Component {
 
 
 
-  componentWillMount(){
-
-
-let fr = firebase.initializeApp(config)
-
-
+  componentDidMount(){
 
 
   // var ref = this.firebaseDB.ref();
@@ -49,25 +66,27 @@ let fr = firebase.initializeApp(config)
   //  console.log(usersRef.push({"name":"alwin","staff":false}))
   //  console.log(usersRef)
 
-  this.props.setFirebase(firebase)
-  this.props.setFirebaseDB(firebase.database())
+  //this.props.setFirebase(firebase)
+  // /this.props.setFirebaseDB(firebase.database())
 
 
 
   }
-  componentDidMount(){
 
 
-  }
   render() {
 
-
+console.log('firebase',firebase)
 
     return (
 
   <div>
 
-    <Route exact path ='/' component = {Signin}/>
+
+ <Route exact path ='/' render = {()=>{
+   return <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
+ }}/>
+
       <Route exact path ='/chat' component = {Chat}/>
 
       </div>

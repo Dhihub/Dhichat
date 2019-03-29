@@ -19,9 +19,9 @@ const rootReducer = combineReducers({SigninReducer,firebaseReducer,inputfieldRed
 
  const store =createStore(
   rootReducer,
-  applyMiddleware(logger,sagaMiddleware)
+  applyMiddleware(logger)
 )
- sagaMiddleware.run(rootSaga)
+ //sagaMiddleware.run(rootSaga)
 
 export default ()=>{
   return (

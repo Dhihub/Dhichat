@@ -16,13 +16,17 @@ export default (state=initialState,action ={})=>{
 
     case 'SET_FIREBASE_DB':
 
-    console.log('db',action.payload)
+
+
+
 
     return {...state,firebaseDB:action.payload}
 
     case 'SET_FIREBASE':
+    let fb = {...action.payload}
+    console.log('fb',fb)
 
-    console.log('firebase',action.payload)
+
 
     return {...state,firebase:action.payload}
 
@@ -31,8 +35,9 @@ export default (state=initialState,action ={})=>{
   console.log(action)
 
  return {...state,message:action.payload}
+
  case 'MESSAGE_RECIEVED':
-  console.log(action)
+
 
  return {...state,message:action.payload}
 
