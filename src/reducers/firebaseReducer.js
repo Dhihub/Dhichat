@@ -1,13 +1,16 @@
 
- const initialSocketState = {
+ const initialState = {
 
 
-   message:''
+   message:'',
+   firebase:'',
+   firebaseDB:''
+
  }
 
 
 
-export default (state=initialSocketState,action ={})=>{
+export default (state=initialState,action ={})=>{
 
   switch(action.type){
 
@@ -16,6 +19,12 @@ export default (state=initialSocketState,action ={})=>{
     console.log('db',action.payload)
 
     return {...state,firebaseDB:action.payload}
+
+    case 'SET_FIREBASE':
+
+    console.log('firebase',action.payload)
+
+    return {...state,firebase:action.payload}
 
 
  case 'INITIAL_RECIEVED':

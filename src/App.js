@@ -11,7 +11,7 @@ import {connect} from 'react-redux'
 import config from './firebaseConfig'
 import Chat from './Components/Chat/Chat'
 import Signin from './Components/Auth/Signin'
-import {setFirebaseDB } from './actions/firebaseDBactions.js'
+import {setFirebase,setFirebaseDB } from './actions/firebaseDBactions.js'
 
 
 const socket = io('http://localhost:5000/');
@@ -20,7 +20,7 @@ class App extends Component {
 
   constructor(){
     super();
-  firebase.initializeApp(config)
+
 
 
 
@@ -35,7 +35,10 @@ class App extends Component {
 
 
 
-  componentDidMount(){
+  componentWillMount(){
+
+
+let fr = firebase.initializeApp(config)
 
 
 
@@ -46,9 +49,13 @@ class App extends Component {
   //  console.log(usersRef.push({"name":"alwin","staff":false}))
   //  console.log(usersRef)
 
+  this.props.setFirebase(firebase)
   this.props.setFirebaseDB(firebase.database())
 
 
+
+  }
+  componentDidMount(){
 
 
   }
@@ -79,7 +86,8 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch) =>{
   return {
-    setFirebaseDB: (firebaseDB)=> dispatch(setFirebaseDB(firebaseDB))
+    setFirebaseDB: (firebaseDB)=> dispatch(setFirebaseDB(firebaseDB)),
+    setFirebase: (firebase)=> dispatch(setFirebase(firebase))
   }
 }
 
