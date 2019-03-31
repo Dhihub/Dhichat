@@ -5,11 +5,11 @@ import Styled from 'styled-components'
 
 export const ChatContainer = Styled.div`
 
-  display: grid;
-
-  grid-template-rows: auto
-  grid-template-columns: 100px 1fr 100px;
+  display:grid;
+  grid-template-columns:300px auto 300px;
+  grid-template-rows: auto;
   grid-template-areas:
+  "header header header"
   "chatlist messagelist info";
   grid-gap:5px;
 

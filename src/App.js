@@ -49,7 +49,7 @@ class App extends Component {
    signInOptions: [
      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
      firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-     
+
 
    ],
 
@@ -62,6 +62,13 @@ class App extends Component {
   const {dispatch} = this.props
 
    this.props.dispatch({type:'SET_FIREBASE_REQUEST',payload:firebase})
+
+
+   
+
+
+
+
   // var ref = this.firebaseDB.ref();
   // var usersRef = ref.child('users');
   //

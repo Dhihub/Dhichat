@@ -1,5 +1,5 @@
 import React from 'react'
-import {createStore,applyMiddleware,combineReducers} from 'redux'
+import {createStore,applyMiddleware,combineReducers,compose} from 'redux'
 import {Provider} from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
 import {createLogger} from 'redux-logger'
@@ -19,7 +19,7 @@ const rootReducer = combineReducers({authReducer,firebaseReducer,inputfieldReduc
 
  const store =createStore(
   rootReducer,
-  applyMiddleware(logger,sagaMiddleware)
+  compose(applyMiddleware(logger,sagaMiddleware))
 )
  sagaMiddleware.run(rootSaga)
 

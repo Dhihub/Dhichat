@@ -9,76 +9,10 @@ import {createWebSocketConnection} from '../socketConnection'
 
 
 
-  export function* authorize(name,type) {
-
-
-    try{
-
-   const token = yield call(
-
-     ()=>{
-
-  return axios.post('http://127.0.0.1:5000/signin',{name,type})
-
-     }
-
-
-   )
-
-   yield put({type:'SIGNIN_SUCCESS',payload:token})
-   // set token to localStorage
-
-    }
-    catch(error){
-      yield put({type:'SIGNIN_ERROR',payload:error})
-    }finally {
-
-     if(yield cancelled()){
-
-        // dispatch an action to set isLoginPending to false,
-
-     }
-
-    }
-
-    }
-
-
-
-export function* loginFlow(){
-
-
-   while(true){
-
-
-     const {payload} = yield take('SIGNIN_REQUEST')
-
-
-     const task = yield fork(authorize,payload.name,payload.type)
-
-    const action =  yield take(['SIGN_OUT',"SIGNOUT_ERROR"])
-
-    if(action.type ==='LOGOUT')
-      {
-        yield cancel(task)
-        //clear the token from localStorage
-      }
-
-
-   }
-
-
-}
-
 
 
 function createChannel(firebase){
-
-  console.log('creeate hannel',firebase)
-
    return eventChannel(emit=>{
-
-
 
      // const userSignedIn =(event)=>{
      //
@@ -93,48 +27,76 @@ function createChannel(firebase){
  }
 
 
-
-// socket.on('initial',initialHandler)
-// socket.on('message',messageHandler)
-// socket.on('error',errorHandler)
-
 const unsubscribe = firebase.auth().onAuthStateChanged((user)=>{
 
+
     if (user != null){
+
+   let users = firebase.database().ref().child('users');
+
+      var ref = firebase.database().ref("users");
+
+
+
+         users.update(
+           {
+        //  [user.uid]
+        [user.uid]: {
+            name: user.displayName,
+            uid:user.uid,
+          }})
+
+   //    ref.once('value',(snapshot)=>{
+   //      console.log(snapshot.val())
+   // let users = snapshot.val();
+    //  })
+
+      ref.orderByChild('uid').once('value',(snapshot)=>{
+        console.log(snapshot.val())
+      })
+
        emit({type:'SIGNIN_SUCCESS',payload:user})
+
+
      }
      else {
        emit({type:'SIGN_OUT_SUCCESS',payload:user})
      }
-
-
-}
-
-
-
-
-)
-
-
+  }
+   )
 
 return unsubscribe;
-
-
    })
+    }
+
+    function chatChannel(firebase){
+
+      return eventChannel(emit=>{
+
+
+      const db = firebase.database()
+
+      let userRef = db.ref('users');
+
+
+      let unsubscribe =  userRef.on('value',(snapshot)=>{
+
+    console.log( Object.values(snapshot.val()))
 
 
 
+       const users = snapshot.val()
+
+  emit({type:'UPDATE_CHATLIST',payload:snapshot})
+
+        })
+
+return unsubscribe
+      })
 
 
-}
 
-
-
-
-
-
-
-
+      }
 
 
 
@@ -145,9 +107,11 @@ export function* watchOnPings(){
      //yield put({type:'SET_SOCKET',payload:socket})
      const {payload} = yield take('SET_FIREBASE_REQUEST')
 
-                    yield put({type:'SET_FIREBASE',payload:payload})
+        yield put({type:'SET_FIREBASE',payload:payload})
+        yield put({type:'SET_FIREBASE_DB',payload:payload.database()})
 
-     const authChannel = yield call(createChannel,payload)
+      const authChannel = yield call(createChannel,payload)
+      const chatlistChannel = yield call(chatChannel,payload)
 
 
 
@@ -164,10 +128,6 @@ export function* watchOnPings(){
     }catch(err){
       console.error('socket err',err)
     }
-
-
-
-
 
 
      }
@@ -194,7 +154,21 @@ export function* sendMessageListener(){
 }
 }
 
+function writeTodb(db){
 
+
+
+}
+
+  const getdb = state=>state.firebaseReducer.firebaseDB
+export function* writeTodbListener(){
+
+  const db = yield select(getdb);
+
+       yield call(writeTodb,db)
+
+
+}
 
 
 
@@ -202,7 +176,9 @@ export function* rootSaga(){
 
    yield all([
 
-  fork(watchOnPings)
+  fork(watchOnPings),
+
+
 
    ])
 

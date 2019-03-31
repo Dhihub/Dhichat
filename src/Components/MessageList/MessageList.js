@@ -37,7 +37,7 @@ class MessageList extends Component {
 console.log(messageInput)
 return(
 
-<div style={{height:'500px'}}>
+<div style={{height:'400px'}}>
 
 <AgentBar>
   <Avatar imgUrl="https://livechat.s3.amazonaws.com/default/avatars/male_8.jpg" />
