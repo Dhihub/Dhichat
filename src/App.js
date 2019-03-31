@@ -18,25 +18,10 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
 firebase.initializeApp(config)
 
-const uiConfig = {
- // Popup signin flow rather than redirect flow.
- signInFlow: 'popup',
- // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
- signInSuccessUrl: '/chat',
- // We will display Google and Facebook as auth providers.
- signInOptions: [
-   firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-   firebase.auth.FacebookAuthProvider.PROVIDER_ID
 
- ],
- // callbacks: {
- //      // Avoid redirects after sign-in.
- //      signInSuccessWithAuthResult: () => false,
- //      redirect: ()=>{
- //        return <Redirect to ='/signin'/>
- //      }
- //    }
-};
+
+
+
 
 class App extends Component {
 
@@ -55,11 +40,28 @@ class App extends Component {
     }
   }
 
+   uiConfig = {
+   // Popup signin flow rather than redirect flow.
+   signInFlow: 'popup',
+   // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
+   signInSuccessUrl: '/chat',
+   // We will display Google and Facebook as auth providers.
+   signInOptions: [
+     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+     firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+     
+
+   ],
+
+  };
 
 
   componentDidMount(){
 
 
+  const {dispatch} = this.props
+
+   this.props.dispatch({type:'SET_FIREBASE_REQUEST',payload:firebase})
   // var ref = this.firebaseDB.ref();
   // var usersRef = ref.child('users');
   //
@@ -70,13 +72,24 @@ class App extends Component {
   // /this.props.setFirebaseDB(firebase.database())
 
 
-
+  //  firebase.auth().onAuthStateChanged(
+  //     (user) => {
+  //       console.log('user',user.displayName)
+  //
+  //
+  //   }
+  //
+  //   )
+  //
+  // }
+  // componentWillUnmount(){
+  //
   }
 
 
   render() {
 
-console.log('firebase',firebase)
+
 
     return (
 
@@ -84,7 +97,9 @@ console.log('firebase',firebase)
 
 
  <Route exact path ='/' render = {()=>{
-   return <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
+
+   return <StyledFirebaseAuth uiCallback={ui => ui.disableAutoSignIn()} uiConfig={this.uiConfig} firebaseAuth={firebase.auth()}/>
+
  }}/>
 
       <Route exact path ='/chat' component = {Chat}/>
@@ -98,16 +113,12 @@ console.log('firebase',firebase)
 const mapStateToProps = (state)=>{
 
   return {
-    firebaseDB: state.firebaseReducer.firebaseDB
+    firebaseDB: state.firebaseReducer.firebaseDB,
+    firebase:state.firebaseReducer.firebase
   }
 
 }
 
-const mapDispatchToProps = (dispatch) =>{
-  return {
-    setFirebaseDB: (firebaseDB)=> dispatch(setFirebaseDB(firebaseDB)),
-    setFirebase: (firebase)=> dispatch(setFirebase(firebase))
-  }
-}
 
-export default connect(mapStateToProps,mapDispatchToProps)(App);
+
+export default connect(mapStateToProps,null)(App);

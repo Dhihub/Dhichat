@@ -1,8 +1,9 @@
 import {SIGNIN_REQUESTED,LOGIN_SUCCESS} from '../constants/constants.js'
 import axios from 'axios'
 
+
  import {delay,eventChannel} from 'redux-saga'
-import {takeEvery,put,call,take,fork,cancelled,cancel,all,apply} from 'redux-saga/effects';
+import {takeEvery,put,call,take,fork,cancelled,cancel,all,apply,select} from 'redux-saga/effects';
 
 import {createWebSocketConnection} from '../socketConnection'
 
@@ -71,19 +72,18 @@ export function* loginFlow(){
 
 
 
-function createSocketChannel(socket){
+function createChannel(firebase){
+
+  console.log('creeate hannel',firebase)
 
    return eventChannel(emit=>{
 
 
-     const initialHandler = (event)=>{
 
-
-       emit({type:'INITIAL_RECIEVED',payload:event})
-     }
-     const messageHandler =(event)=>{
-       emit({type:'MESSAGE_RECIEVED',payload:event})
-     }
+     // const userSignedIn =(event)=>{
+     //
+     //   emit({type:'SIGNED_IN',payload:event})
+     // }
 
     const errorHandler = (errorEvent)=>{
 
@@ -92,15 +92,30 @@ function createSocketChannel(socket){
 
  }
 
-socket.on('initial',initialHandler)
-socket.on('message',messageHandler)
-socket.on('error',errorHandler)
 
-const unsubscribe =()=>{
 
-  socket.off('ping',messageHandler)
+// socket.on('initial',initialHandler)
+// socket.on('message',messageHandler)
+// socket.on('error',errorHandler)
+
+const unsubscribe = firebase.auth().onAuthStateChanged((user)=>{
+
+    if (user != null){
+       emit({type:'SIGNIN_SUCCESS',payload:user})
+     }
+     else {
+       emit({type:'SIGN_OUT_SUCCESS',payload:user})
+     }
+
 
 }
+
+
+
+
+)
+
+
 
 return unsubscribe;
 
@@ -114,13 +129,25 @@ return unsubscribe;
 }
 
 
+
+
+
+
+
+
+
+
+
 export function* watchOnPings(){
 
-     const socket = yield call(createWebSocketConnection)
+     //const socket = yield call(createWebSocketConnection)
 
-     yield put({type:'SET_SOCKET',payload:socket})
+     //yield put({type:'SET_SOCKET',payload:socket})
+     const {payload} = yield take('SET_FIREBASE_REQUEST')
 
-     const socketChannel = yield call(createSocketChannel,socket)
+                    yield put({type:'SET_FIREBASE',payload:payload})
+
+     const authChannel = yield call(createChannel,payload)
 
 
 
@@ -128,7 +155,7 @@ export function* watchOnPings(){
 
     try{
 
-      const data = yield take(socketChannel)
+      const data = yield take(authChannel)
 
       yield put({type:data.type,payload:data.payload})
 
@@ -168,13 +195,14 @@ export function* sendMessageListener(){
 }
 
 
+
+
+
 export function* rootSaga(){
 
    yield all([
-  //fork(watchOnPings),
-  fork(loginFlow),
-  //fork(sendMessageListener)
 
+  fork(watchOnPings)
 
    ])
 

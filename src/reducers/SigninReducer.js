@@ -26,8 +26,12 @@ export default  (state =initialSigninState, action={})=>{
 
 
  case "SIGNIN_SUCCESS":
-    console.log(action)
-   return {...state,token:action.payload}
+    console.log('action',action)
+   return {...state,user:action.payload}
+
+   case "SIGN_OUT_SUCCESS":
+      console.log('action',action)
+     return {...state,user:action.payload}
 
 case "SIGNIN_ERROR":
   return {...state,error:action.payload}
