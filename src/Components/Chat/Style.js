@@ -13,7 +13,7 @@ export const ChatContainer = Styled.div`
   "chatlist messagelist info";
   grid-gap:5px;
 
-margin: 30px;
+
   @media (max-width: 700px) {
 
 grid-template-columns: auto;

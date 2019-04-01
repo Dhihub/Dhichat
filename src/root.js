@@ -7,6 +7,7 @@ import {BrowserRouter as Router} from 'react-router-dom'
 import authReducer from './reducers/SigninReducer'
 import firebaseReducer from './reducers/firebaseReducer'
 import inputfieldReducer from './reducers/inputfieldReducer'
+import chatReducer from './reducers/chatReducer'
 import {ThemeProvider,darkTheme,elegantTheme,purpleTheme} from '@livechat/ui-kit'
 
 import theme from './chatKitTheme.js'
@@ -14,7 +15,7 @@ import App from './App'
 import {loginFlow,watchOnPings,rootSaga} from './sagas/saga.js'
 
 const logger = createLogger()
-const rootReducer = combineReducers({authReducer,firebaseReducer,inputfieldReducer})
+const rootReducer = combineReducers({authReducer,firebaseReducer,inputfieldReducer,chatReducer})
  const sagaMiddleware = createSagaMiddleware();
 
  const store =createStore(

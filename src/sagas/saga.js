@@ -52,7 +52,7 @@ const unsubscribe = firebase.auth().onAuthStateChanged((user)=>{
     //  })
 
       ref.orderByChild('uid').once('value',(snapshot)=>{
-        console.log(snapshot.val())
+      //  console.log(snapshot.val())
       })
 
        emit({type:'SIGNIN_SUCCESS',payload:user})
@@ -87,7 +87,7 @@ return unsubscribe;
 
        const users = snapshot.val()
 
-  emit({type:'UPDATE_CHATLIST',payload:snapshot})
+  emit(Object.values(snapshot.val()))
 
         })
 
@@ -111,7 +111,9 @@ export function* watchOnPings(){
         yield put({type:'SET_FIREBASE_DB',payload:payload.database()})
 
       const authChannel = yield call(createChannel,payload)
+
       const chatlistChannel = yield call(chatChannel,payload)
+
 
 
 
@@ -122,6 +124,9 @@ export function* watchOnPings(){
       const data = yield take(authChannel)
 
       yield put({type:data.type,payload:data.payload})
+
+      const data2 =yield take(chatlistChannel)
+      yield put({type:'UPDATE_CHATLIST',payload:data2})
 
 
 
