@@ -1,8 +1,10 @@
 import React,{Component} from 'react'
+
 import {AgentBar,Column,Title,Avatar,FixedWrapper, MessageList as List,Message,MessageGroup,
   MessageText,TextComposer,Row,IconButton,AddIcon,TextInput,SendButton,EmojiIcon
 
 } from '@livechat/ui-kit'
+
 import {connect} from 'react-redux'
 
 
@@ -12,7 +14,9 @@ import {connect} from 'react-redux'
 
    return {
 
-     messageInput: state.inputfieldReducer.messageInput
+     messageInput: state.inputfieldReducer.messageInput,
+     messages: state.chatReducer.messages,
+     currentChat:state.chatReducer.currentChat
    }
  }
 
@@ -28,34 +32,47 @@ class MessageList extends Component {
 
 
 
-
-
   render(){
 
   const  {socket,dispatch,messageInput} = this.props;
+  let messages =  this.props.messages.map((message)=>{
+
+  return (
+
+    <MessageGroup onlyFirstWithMeta>
+
+         <Message date={message.time} isOwn={true} authorName={message.name}>
+           <MessageText>
+             {message.text}
+           </MessageText>
+         </Message>
+
+       </MessageGroup>
+
+
+  )
+
+
+
+  })
+
 
 console.log(messageInput)
 return(
+
+
 
 <div style={{height:'400px'}}>
 
 <AgentBar>
   <Avatar imgUrl="https://livechat.s3.amazonaws.com/default/avatars/male_8.jpg" />
   <Column>
-    <Title>{'Jon Snow'}</Title>
+    <Title>{this.props.currentChat.name}</Title>
   </Column>
 </AgentBar>
+
 <List active>
- <MessageGroup onlyFirstWithMeta>
-      <Message date="21:38" isOwn={true} authorName="Jon Snow">
-        <MessageText>
-          Hi I would like to know about some features
-        </MessageText>
-      </Message>
-      <Message date="21:38" isOwn={true} authorName="Jon Snow">
-        <MessageText>This helps me a lot</MessageText>
-      </Message>
-    </MessageGroup>
+       {messages}
     <MessageGroup onlyFirstWithMeta
     avatar="https://livechat.s3.amazonaws.com/default/avatars/male_8.jpg">
 
@@ -67,6 +84,7 @@ return(
          <Message date="21:42" isOwn={false} authorName="staff">
            <MessageText></MessageText>
          </Message>
+
        </MessageGroup>
 
 </List>
@@ -78,12 +96,15 @@ return(
 
 }  onClick= {(e)=>{
 
-    console.log('socket ',socket)
+
     console.log('message',messageInput)
 
     if(messageInput.length>1){
 
-  return }}} >
+  dispatch({type:'SEND_MESSAGE_REQUEST'})
+}
+
+}} >
   <Row align="center">
     <IconButton fit>
       <AddIcon />

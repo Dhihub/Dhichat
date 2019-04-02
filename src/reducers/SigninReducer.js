@@ -5,7 +5,11 @@ import {SET_TYPE_FIELD,SET_NAME_FIELD} from '../constants/constants.js'
 const initialSigninState = {
 
   name:'',
-  type: ''
+  type: '',
+  user:{
+    displayName:'',
+    uid:''
+  }
 }
 
 
@@ -28,7 +32,7 @@ export default  (state =initialSigninState, action={})=>{
  case "SIGNIN_SUCCESS":
 
 
-    
+
    return {...state,user:action.payload}
 
    case "SIGN_OUT_SUCCESS":

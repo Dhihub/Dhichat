@@ -7,7 +7,8 @@ import {takeEvery,put,call,take,fork,cancelled,cancel,all,apply,select} from 're
 
 import {createWebSocketConnection} from '../socketConnection'
 
-
+import {watchOnMessages} from './messageSaga.js'
+import {sendMessageSaga} from './sendMessage.js'
 
 
 
@@ -139,40 +140,56 @@ export function* watchOnPings(){
 
 }
 
-function* sendMessage(payload){
 
 
 
-  yield apply(payload.socket,payload.socket.emit,['message',payload.messageInput])
+const getUser = (state)=> state.authReducer.user;
+const getFirebase = (state)=> state.firebaseReducer.firebase;
 
-  yield put({type:"CLEAR_MESSAGE_FIELD"})
+function* getChat(user,firebase,receiver){
 
 
+
+
+
+//console.log(user,firebase,receiver)
+
+ // let group = firebase.database().ref().child(`groups/1LePBgFcMrPLd9gA9bP7vBxrkB83jLDIo1an9agw6QvsgUNVn4SXoHu2`);
+ //
+ //  group.once('value',(chats)=>{
+ //    console.log('snap',Object.values(chats.val()));
+ //
+ //     return chats;
+ //
+ //
+ //    //put({type:'SET_CURRENT_CHAT',payload:Object.values(chats.val())})
+ //
+ //  })
+try{
+ //const chats = yield call(firebase.database().ref().child(`groups/1LePBgFcMrPLd9gA9bP7vBxrkB83jLDIo1an9agw6QvsgUNVn4SXoHu2`).once,'value')
+
+  const chats= yield apply(firebase.database().ref().child(`groups/1LePBgFcMrPLd9gA9bP7vBxrkB83jLDIo1an9agw6QvsgUNVn4SXoHu2`),firebase.database().ref().child(`groups/1LePBgFcMrPLd9gA9bP7vBxrkB83jLDIo1an9agw6QvsgUNVn4SXoHu2`).once,['value'])
+
+  yield put({type:'SET_CURRENT_CHAT',payload:Object.values(chats.val())})
+}  catch(e){
+  yield console.log(e)
 
 }
-export function* sendMessageListener(){
- while(true){
-
-  const {payload} = yield take('SEND_MESSAGE_REQUESTED')
-
-  yield fork(sendMessage,payload)
-}
-}
-
-function writeTodb(db){
-
-
 
 }
 
-  const getdb = state=>state.firebaseReducer.firebaseDB
-export function* writeTodbListener(){
+export function* getChatSaga(){
+    while(true){
 
-  const db = yield select(getdb);
+    let {receiver} =  yield take('SET_CURRENT_CHAT_REQUEST')
+    let user = yield select(getUser)
+    let firebase = yield select(getFirebase)
+  let chats =  yield call(getChat,user,firebase,receiver)
 
-       yield call(writeTodb,db)
+    //yield put({type:'SET_CURRENT_CHAT',payload:chats})
 
 
+    }
 }
 
 
@@ -182,6 +199,8 @@ export function* rootSaga(){
    yield all([
 
   fork(watchOnPings),
+  fork(watchOnMessages),
+  fork(sendMessageSaga)
 
 
 

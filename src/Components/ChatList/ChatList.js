@@ -6,15 +6,30 @@ import {ChatList as List,ChatListItem, Avatar, Column,Row,Title,Subtitle} from '
 
  class ChatList extends Component {
 
+    onChatClick = (receiver)=>{
+
+      this.props.dispatch({type:'SET_CURRENT_CHAT_REQUEST',receiver:receiver})
+   }
 
 
 render(){
 
+
+
       const chatList = this.props.chatList.map((list)=>{
 
+
+    if(list.uid === this.props.user.uid){
+      return;
+    }
+    else {
     return(
 
-     <ChatListItem>
+     <ChatListItem onClick = {()=>{
+
+       this.onChatClick(list)
+
+     }}>
      <Avatar imgUrl='https://livechat.s3.amazonaws.com/default/avatars/male_8.jpg'/>
      <Column full>
 
@@ -33,10 +48,9 @@ render(){
 
      </ChatListItem>
 
-
     )
 
-
+}
 
       })
   return (
@@ -47,18 +61,13 @@ render(){
   )
 }
 
-
-
-
-
-
-
 }
 
 const mapStateToProps = (state)=>{
 
   return {
-  chatList: state.chatReducer.chatList
+  chatList: state.chatReducer.chatList,
+  user: state.authReducer.user
 }
 }
 

@@ -14,12 +14,14 @@ export const ChatContainer = Styled.div`
   grid-gap:5px;
 
 
-  @media (max-width: 700px) {
+  @media (max-width: 800px) {
 
 grid-template-columns: auto;
+grid-template-rows: 50px 300px 1fr;
 grid-template-areas:
-
-     "messagelist";
+     "header"
+     "messagelist"
+     "chatlist";
 
   }
 

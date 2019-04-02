@@ -34,6 +34,9 @@ function AppHeader(props) {
           <Typography variant="h6" color="inherit" className={classes.grow}>
             Dhichat
           </Typography>
+          <Typography variant="h6" color="inherit" className={classes.grow}>
+            {props.user.displayName}
+          </Typography>
           <Button color="inherit" onClick = {() =>props.firebase.auth().signOut()}>Logout</Button>
         </Toolbar>
       </AppBar>
@@ -44,7 +47,8 @@ function AppHeader(props) {
 const mapStateToProps = (state)=>{
 
   return {
-    firebase: state.firebaseReducer.firebase
+    firebase: state.firebaseReducer.firebase,
+    user:state.authReducer.user
   }
 }
 

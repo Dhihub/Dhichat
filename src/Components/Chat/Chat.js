@@ -13,7 +13,10 @@ class Chat extends Component {
 
 
   render(){
+
     console.log('firebbase',this.props.firebase)
+
+    
     return(
 
 
