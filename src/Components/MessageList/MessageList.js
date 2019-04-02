@@ -16,7 +16,8 @@ import {connect} from 'react-redux'
 
      messageInput: state.inputfieldReducer.messageInput,
      messages: state.chatReducer.messages,
-     currentChat:state.chatReducer.currentChat
+     currentChat:state.chatReducer.currentChat,
+     user:state.authReducer.user
    }
  }
 
@@ -35,19 +36,24 @@ class MessageList extends Component {
   render(){
 
   const  {socket,dispatch,messageInput} = this.props;
+
+   let {currentChat,user} = this.props
   let messages =  this.props.messages.map((message)=>{
 
   return (
 
-    <MessageGroup onlyFirstWithMeta>
 
-         <Message date={message.time} isOwn={true} authorName={message.name}>
+    <MessageGroup onlyFirstWithMeta >
+
+         <Message date={message.time} isOwn={user.uid === message.senderID} authorName={message.name}>
            <MessageText>
              {message.text}
            </MessageText>
          </Message>
 
        </MessageGroup>
+
+
 
 
   )
@@ -57,7 +63,12 @@ class MessageList extends Component {
   })
 
 
-console.log(messageInput)
+if(this.props.currentChat.name==''){
+  return (<h2 style={{textAlign:"center"}}>no chat selected</h2>)
+}
+
+
+else {
 return(
 
 
@@ -66,29 +77,20 @@ return(
 
 <AgentBar>
   <Avatar imgUrl="https://livechat.s3.amazonaws.com/default/avatars/male_8.jpg" />
-  <Column>
-    <Title>{this.props.currentChat.name}</Title>
-  </Column>
-</AgentBar>
+   <Column>
+     <Title>{this.props.currentChat.name}</Title>
+   </Column>
+ </AgentBar>
+
 
 <List active>
-       {messages}
-    <MessageGroup onlyFirstWithMeta
-    avatar="https://livechat.s3.amazonaws.com/default/avatars/male_8.jpg">
 
-         <Message date="21:40" isOwn={false} authorName="staff">
-           <MessageText>
-           Hi I am a bot , still learning but how can I help U!
-           </MessageText>
-         </Message>
-         <Message date="21:42" isOwn={false} authorName="staff">
-           <MessageText></MessageText>
-         </Message>
+ {messages}
 
-       </MessageGroup>
 
 </List>
 
+<div>
 <TextComposer onChange= {
   (e)=> {
 
@@ -121,15 +123,73 @@ return(
 </TextComposer>
 
 
+
+</div>
+
 </div>
 
 
 
 )
   }
-
+}
 
 }
 
+// <AgentBar>
+//   <Avatar imgUrl="https://livechat.s3.amazonaws.com/default/avatars/male_8.jpg" />
+//   <Column>
+//     <Title>{this.props.currentChat.name}</Title>
+//   </Column>
+// </AgentBar>
+//
+// <List active>
+//        {messages}
+//     <MessageGroup onlyFirstWithMeta
+//     avatar="https://livechat.s3.amazonaws.com/default/avatars/male_8.jpg">
+//
+//          <Message date="21:40" isOwn={false} authorName="staff">
+//            <MessageText>
+//            Hi I am a bot , still learning but how can I help U!
+//            </MessageText>
+//          </Message>
+//          <Message date="21:42" isOwn={false} authorName="staff">
+//            <MessageText></MessageText>
+//          </Message>
+//
+//        </MessageGroup>
+//
+// </List>
+//
+// <TextComposer onChange= {
+//   (e)=> {
+//
+//     return dispatch({type:'SET_MESSAGE_FIELD',payload:e.target.value})}
+//
+// }  onClick= {(e)=>{
+//
+//
+//     console.log('message',messageInput)
+//
+//     if(messageInput.length>1){
+//
+//   dispatch({type:'SEND_MESSAGE_REQUEST'})
+// }
+//
+// }} >
+//   <Row align="center">
+//     <IconButton fit>
+//       <AddIcon />
+//     </IconButton>
+//     <TextInput   />
+//     <SendButton   fit />
+//   </Row>
+//
+//   <Row verticalAlign="center" justify="right">
+//     <IconButton fit>
+//       <EmojiIcon />
+//     </IconButton>
+//   </Row>
+// </TextComposer>
 
 export default connect(mapStateToProps,null)(MessageList)

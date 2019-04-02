@@ -9,6 +9,7 @@ import firebaseReducer from './reducers/firebaseReducer'
 import inputfieldReducer from './reducers/inputfieldReducer'
 import chatReducer from './reducers/chatReducer'
 import {ThemeProvider,darkTheme,elegantTheme,purpleTheme} from '@livechat/ui-kit'
+import customTheme from './chatKitTheme.js'
 
 import theme from './chatKitTheme.js'
 import App from './App'
@@ -28,7 +29,7 @@ export default ()=>{
   return (
 
 <Provider store = {store}>
-<ThemeProvider theme= {purpleTheme}>
+<ThemeProvider theme = {customTheme}>
 <Router>
 <App/>
 </Router>

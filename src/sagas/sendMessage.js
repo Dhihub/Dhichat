@@ -26,7 +26,7 @@ function sendMessage(firebase,user,currentChat,message){
     from:user.displayName,
     senderID:user.uid,
     text:message,
-    time:"2:30"
+    time:"3:30"
   }
 
 
