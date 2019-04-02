@@ -15,13 +15,11 @@ function sendMessage(firebase,user,currentChat,message){
 
 
 
-  console.log({
+  let groupID = currentChat.uid+user.uid
+  let sortedGroupID = groupID.split('').sort().join('')
+  console.log('groupID',groupID)
+  console.log('sortedGroupID',sortedGroupID)
 
-    from:user.displayName,
-    senderID:user.uid,
-    text:message,
-    time:"2:30"
-  })
 
   let data = {
 
@@ -33,7 +31,7 @@ function sendMessage(firebase,user,currentChat,message){
 
 
 
-    let ref =  firebase.database().ref(`groups/${currentChat.uid + user.uid}`).push(data)
+    let ref =  firebase.database().ref(`groups/${sortedGroupID}`).push(data)
 
 
 

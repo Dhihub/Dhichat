@@ -45,7 +45,9 @@ const unsubscribe = firebase.auth().onAuthStateChanged((user)=>{
         [user.uid]: {
             name: user.displayName,
             uid:user.uid,
-          }})
+          }}
+
+        )
 
    //    ref.once('value',(snapshot)=>{
    //      console.log(snapshot.val())

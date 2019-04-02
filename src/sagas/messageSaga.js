@@ -13,7 +13,12 @@ const getFirebase = (state)=> state.firebaseReducer.firebase;
 
 function createChannel(firebase,user,reciever){
 
-  console.log('called')
+  let groupID = reciever.uid+user.uid
+  let sortedGroupID = groupID.split('').sort().join('')
+  console.log('groupID',groupID)
+  console.log('sortedGroupID',sortedGroupID)
+
+
 
 
 return eventChannel(emit=>{
@@ -21,7 +26,7 @@ return eventChannel(emit=>{
 
 
 
- const unsubscribe = firebase.database().ref().child(`groups/1LePBgFcMrPLd9gA9bP7vBxrkB83jLDIo1an9agw6QvsgUNVn4SXoHu2`).on('value',(chats)=>{
+ const unsubscribe = firebase.database().ref().child(`groups/${sortedGroupID}`).on('value',(chats)=>{
 
 
   emit(Object.values(chats.val()))
