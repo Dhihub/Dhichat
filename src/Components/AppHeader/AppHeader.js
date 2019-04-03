@@ -1,4 +1,5 @@
 import React from 'react';
+import {withRouter} from 'react-router-dom'
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux'
 import { withStyles } from '@material-ui/core/styles';
@@ -26,7 +27,7 @@ function AppHeader(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" >
         <Toolbar>
           <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
             <MenuIcon />
@@ -37,7 +38,17 @@ function AppHeader(props) {
           <Typography variant="h6" color="inherit" className={classes.grow}>
             {props.user.displayName}
           </Typography>
-          <Button color="inherit" onClick = {() =>props.firebase.auth().signOut()}>Logout</Button>
+          <Button color="inherit" onClick = {
+            () =>{
+
+              props.firebase.auth().signOut()
+
+            props.history.push('/');
+
+            }
+
+
+          }>Logout</Button>
         </Toolbar>
       </AppBar>
     </div>
@@ -52,4 +63,4 @@ const mapStateToProps = (state)=>{
   }
 }
 
-export default connect(mapStateToProps,null)(withStyles(styles)(AppHeader))
+export default connect(mapStateToProps,null)(withStyles(styles)(withRouter(AppHeader)))

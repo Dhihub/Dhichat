@@ -64,7 +64,7 @@ class App extends Component {
    this.props.dispatch({type:'SET_FIREBASE_REQUEST',payload:firebase})
 
 
-   
+
 
 
 
@@ -105,7 +105,12 @@ class App extends Component {
 
  <Route exact path ='/' render = {()=>{
 
-   return <StyledFirebaseAuth uiCallback={ui => ui.disableAutoSignIn()} uiConfig={this.uiConfig} firebaseAuth={firebase.auth()}/>
+   return (
+     <div style = {{marginTop:'300px',textAlign:'center'}}>
+      <h2>please sign in.....</h2>
+     <StyledFirebaseAuth  uiCallback={ui => ui.disableAutoSignIn()} uiConfig={this.uiConfig} firebaseAuth={firebase.auth()}/>
+    </div>
+   )
 
  }}/>
 
