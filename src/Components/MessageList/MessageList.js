@@ -43,7 +43,9 @@ class MessageList extends Component {
   return (
 
 
-    <MessageGroup onlyFirstWithMeta >
+    <MessageGroup onlyFirstWithMeta
+   
+    >
 
          <Message date={message.time} isOwn={user.uid === message.senderID} authorName={message.name}>
            <MessageText>

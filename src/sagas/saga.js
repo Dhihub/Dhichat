@@ -45,6 +45,7 @@ const unsubscribe = firebase.auth().onAuthStateChanged((user)=>{
         [user.uid]: {
             name: user.displayName,
             uid:user.uid,
+            photoURL:user.photoURL
           }}
 
         )
