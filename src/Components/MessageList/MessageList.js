@@ -17,7 +17,8 @@ import {connect} from 'react-redux'
      messageInput: state.inputfieldReducer.messageInput,
      messages: state.chatReducer.messages,
      currentChat:state.chatReducer.currentChat,
-     user:state.authReducer.user
+     user:state.authReducer.user,
+     chatService:state.chatReducer.chatService
    }
  }
 
@@ -43,9 +44,7 @@ class MessageList extends Component {
   return (
 
 
-    <MessageGroup onlyFirstWithMeta
-   
-    >
+    <MessageGroup onlyFirstWithMeta  >
 
          <Message date={message.time} isOwn={user.uid === message.senderID} authorName={message.name}>
            <MessageText>
@@ -66,7 +65,11 @@ class MessageList extends Component {
 
 
 if(this.props.currentChat.name==''){
+
+
   return (<h2 style={{textAlign:"center"}}>no chat selected</h2>)
+
+
 }
 
 
@@ -77,12 +80,51 @@ return(
 
 <div style={{height:'400px'}}>
 
+
+
+
+
+
+ {
+   this.props.chatService =='liveChat' &&
+   (
 <AgentBar>
-  <Avatar imgUrl="https://livechat.s3.amazonaws.com/default/avatars/male_8.jpg" />
+<Avatar imgUrl="https://livechat.s3.amazonaws.com/default/avatars/male_8.jpg" />
    <Column>
-     <Title>{this.props.currentChat.name}</Title>
+  <Title>{this.props.currentChat.name}</Title>
+
    </Column>
- </AgentBar>
+
+</AgentBar>
+
+)
+
+}
+{
+  this.props.chatService =='botEngine' &&
+  (
+<AgentBar>
+<Avatar imgUrl="https://livechat.s3.amazonaws.com/default/avatars/male_8.jpg" />
+  <Column>
+ <Title>Bot</Title>
+  </Column>
+  <Column>
+ <button style={{marginLeft:'30px', height:'2em'}} onClick = {()=>{
+   this.props.dispatch({type:'CHANGE_CHAT_SERVICE',payload:'liveChat'})
+ }}>transfer</button>
+  </Column>
+
+
+</AgentBar>
+
+)
+
+}
+
+
+
+
+
 
 
 <List active>

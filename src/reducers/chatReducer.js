@@ -2,7 +2,7 @@
 
   const initialState ={
 
-
+   chatService: 'botEngine',
     chatList: [],
     chatSelected: false,
     currentChat:{
@@ -19,6 +19,13 @@
 export default (state=initialState,action={})=>{
 
 switch(action.type){
+
+
+case 'CHANGE_CHAT_SERVICE':
+
+return {...state, chatService:action.payload}
+
+
 case 'UPDATE_CHATLIST':
 
 return {...state,chatList:action.payload}

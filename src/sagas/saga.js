@@ -37,7 +37,7 @@ const unsubscribe = firebase.auth().onAuthStateChanged((user)=>{
 
       var ref = firebase.database().ref("users");
 
-
+       let position = user.displayName==='david john'? 'manager' : 'staff'
 
          users.update(
            {
@@ -45,7 +45,8 @@ const unsubscribe = firebase.auth().onAuthStateChanged((user)=>{
         [user.uid]: {
             name: user.displayName,
             uid:user.uid,
-            photoURL:user.photoURL
+            photoURL:user.photoURL,
+            position: position
           }}
 
         )
@@ -59,7 +60,14 @@ const unsubscribe = firebase.auth().onAuthStateChanged((user)=>{
       //  console.log(snapshot.val())
       })
 
-       emit({type:'SIGNIN_SUCCESS',payload:user})
+       emit({type:'SIGNIN_SUCCESS',payload:{
+           name: user.displayName,
+           uid:user.uid,
+           photoURL:user.photoURL,
+           position: position
+         }
+
+       })
 
 
      }
@@ -106,10 +114,11 @@ return unsubscribe
 
 export function* watchOnPings(){
 
-     //const socket = yield call(createWebSocketConnection)
 
-     //yield put({type:'SET_SOCKET',payload:socket})
      const {payload} = yield take('SET_FIREBASE_REQUEST')
+
+  
+
 
         yield put({type:'SET_FIREBASE',payload:payload})
         yield put({type:'SET_FIREBASE_DB',payload:payload.database()})
