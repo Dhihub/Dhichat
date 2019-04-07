@@ -1,6 +1,6 @@
 
-import {delay,eventChannel} from 'redux-saga'
-import {takeEvery,put,call,take,fork,cancelled,cancel,all,apply,select} from 'redux-saga/effects';
+import {eventChannel} from 'redux-saga'
+import {takeEvery,put,call,take,all,apply,select} from 'redux-saga/effects';
 
 
 
@@ -44,7 +44,8 @@ export function* watchOnMessages(){
 
 
 
-    let {receiver} =  yield take('SET_CURRENT_CHAT_REQUEST')
+    //let {receiver} =  yield take('SET_CURRENT_CHAT_REQUEST')
+     let receiver = {uid:'1LePBgFcMrPLd9gA9bP7vBxrkB83'}
     let user = yield select(getUser)
     let firebase = yield select(getFirebase)
 

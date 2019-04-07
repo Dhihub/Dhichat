@@ -110,7 +110,12 @@ return(
   </Column>
   <Column>
  <button style={{marginLeft:'30px', height:'2em'}} onClick = {()=>{
-   this.props.dispatch({type:'CHANGE_CHAT_SERVICE',payload:'liveChat'})
+
+   this.props.dispatch({type:'CHAT_TRANSFER_REQUEST',payload:'liveChat'})
+
+
+
+
  }}>transfer</button>
   </Column>
 
