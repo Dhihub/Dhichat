@@ -5,7 +5,7 @@ import {delay,eventChannel} from 'redux-saga'
 import {takeEvery,put,call,take,fork,cancelled,cancel,all,apply,select} from 'redux-saga/effects';
 
 
-
+import {getGroupName} from '../utils.js'
 
 const getUser = (state)=> state.authReducer.user;
 const getFirebase = (state)=> state.firebaseReducer.firebase;
@@ -48,10 +48,8 @@ let storyid='5a439b8bb9677d000790134d'
 
 function* handleSendMessage(firebase,user,currentChat,message,chatService){
 
-  let groupID = currentChat.uid+user.uid
-  let sortedGroupID = groupID.split('').sort().join('')
-  console.log('groupID',groupID)
-  console.log('sortedGroupID',sortedGroupID)
+
+  let groupName = getGroupName(user.uid)
 
 let data = {}
 
@@ -67,7 +65,7 @@ console.log('bot engine')
     }
 
 
-     let ref =  firebase.database().ref(`groups/${sortedGroupID}/messages`).push(data)
+     let ref =  firebase.database().ref(`groups/${groupName}/messages`).push(data)
 
 
        const botResponse = yield call(sendQueryToBot,message)
@@ -81,10 +79,10 @@ console.log('bot engine')
        }
        console.log(data)
 
- ref =  firebase.database().ref(`groups/${sortedGroupID}/messages`).push(data)
+ ref =  firebase.database().ref(`groups/${groupName}/messages`).push(data)
 
 
-} else if(chatService =='liveChat'){
+} else if(chatService ==='liveChat'){
 
 
 
@@ -100,7 +98,7 @@ console.log('bot engine')
 
 
 
-let ref =  firebase.database().ref(`groups/${sortedGroupID}`).push(data)
+let ref =  firebase.database().ref(`groups/${groupName}/messages`).push(data)
 
 }
 

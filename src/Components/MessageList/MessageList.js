@@ -86,7 +86,7 @@ return(
 
 
  {
-   this.props.chatService =='liveChat' &&
+   this.props.chatService === 'liveChat' &&
    (
 <AgentBar>
 <Avatar imgUrl="https://livechat.s3.amazonaws.com/default/avatars/male_8.jpg" />

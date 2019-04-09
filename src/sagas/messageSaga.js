@@ -3,7 +3,7 @@ import {eventChannel} from 'redux-saga'
 import {takeEvery,put,call,take,all,apply,select} from 'redux-saga/effects';
 
 
-
+import {getGroupName} from '../utils.js'
 
 const getUser = (state)=> state.authReducer.user;
 const getFirebase = (state)=> state.firebaseReducer.firebase;
@@ -12,25 +12,27 @@ const getFirebase = (state)=> state.firebaseReducer.firebase;
 
 
 
-function createChannel(firebase,user,reciever){
-
-  let groupID = reciever.uid+user.uid
-  let sortedGroupID = groupID.split('').sort().join('')
-  console.log('groupID',groupID)
-  console.log('sortedGroupID',sortedGroupID)
+ function createChatChannel(firebase,user,reciever){
 
 
 
+ let group = getGroupName(user.uid)
+
+
+console.log(user);
 
 return eventChannel(emit=>{
 
 
 
+ const unsubscribe = firebase.database().ref(`groups/${group}/messages`).on('value',(chats)=>{
 
- const unsubscribe = firebase.database().ref().child(`groups/${sortedGroupID}/messages`).on('value',(chats)=>{
+console.log(chats.val());
 
 
   emit(Object.values(chats.val()))
+
+
 
 })
 
@@ -39,25 +41,26 @@ return unsubscribe
 })
 }
 
-
+  let receiver = {name:'david john',uid:'1LePBgFcMrPLd9gA9bP7vBxrkB83'}
 export function* watchOnMessages(){
 
 
 
     //let {receiver} =  yield take('SET_CURRENT_CHAT_REQUEST')
-     let receiver = {uid:'1LePBgFcMrPLd9gA9bP7vBxrkB83'}
+
     let user = yield select(getUser)
     let firebase = yield select(getFirebase)
 
-    const chatChannel = yield call(createChannel,firebase,user,receiver)
+    const chatChannel = yield call(createChatChannel,firebase,user)
   //let chats =  yield call(getChat,user,firebase,receiver)
 
 
   while(true){
 
    const messages = yield take(chatChannel)
+    console.log('messaqges',messages);
 
-  yield put({type:'SET_CURRENT_CHAT',payload:{messages,receiver}})
+    yield put({type:'SET_CURRENT_CHAT',payload:{messages,receiver}})
 
 
 

@@ -5,11 +5,13 @@ import axios from 'axios'
  import {delay,eventChannel} from 'redux-saga'
 import {takeEvery,put,call,take,fork,cancelled,cancel,all,apply,select} from 'redux-saga/effects';
 
+import {getGroupName} from '../utils.js'
 
 
 import {watchOnMessages} from './messageSaga.js'
 import {sendMessageSaga} from './sendMessage.js'
 import {transferChat} from './chatTransferSaga.js'
+import {userRegisteredChannel} from './userRegisteredChannel.js'
 
 const getUser = (state)=> state.authReducer.user;
 const getFirebase = (state)=> state.firebaseReducer.firebase;
@@ -39,7 +41,9 @@ const unsubscribe = firebase.auth().onAuthStateChanged((user)=>{
 
    let users = firebase.database().ref().child('users');
 
-      var ref = firebase.database().ref("users");
+    var ref = firebase.database().ref("users");
+
+    let groups = firebase.database().ref('groups');
 
        let position = user.displayName==='david john'? 'manager' : 'staff'
 
@@ -55,14 +59,19 @@ const unsubscribe = firebase.auth().onAuthStateChanged((user)=>{
 
         )
 
-   //    ref.once('value',(snapshot)=>{
-   //      console.log(snapshot.val())
-   // let users = snapshot.val();
-    //  })
 
-      ref.orderByChild('uid').once('value',(snapshot)=>{
-      //  console.log(snapshot.val())
-      })
+     // groups.update({
+     //
+     //   [getGroupName(user.uid)]:{
+     //
+     //   status:'botEngine'
+     //
+     //  }
+     //
+     //
+     // })
+     //
+
 
        emit({type:'SIGNIN_SUCCESS',payload:{
            name: user.displayName,
@@ -85,7 +94,7 @@ return unsubscribe;
    })
     }
 
-    function createChatChannel(firebase){
+    function createChatListChannel(firebase){
 
       return eventChannel(emit=>{
 
@@ -117,6 +126,7 @@ return unsubscribe
 
 
 export function* watchOnPings(){
+  let receiver = {name:'david john',uid:'1LePBgFcMrPLd9gA9bP7vBxrkB83'}
 
 
      const {payload} = yield take('SET_FIREBASE_REQUEST')
@@ -124,40 +134,31 @@ export function* watchOnPings(){
         yield put({type:'SET_FIREBASE',payload:payload})
         yield put({type:'SET_FIREBASE_DB',payload:payload.database()})
 
+       let firebase = yield select(getFirebase)
+
       const authChannel = yield call(createAuthChannel,payload)
 
-      const chatlistChannel = yield call(createChatChannel,payload)
-
-
-
-
+      const chatlistChannel = yield call(createChatListChannel,payload)
      while(true){
 
     try{
-
       const data = yield take(authChannel)
-
       yield put({type:data.type,payload:data.payload})
+       fork(watchOnMessages)
 
-      const user = yield select(getUser);
-
-      const data2 =yield take(chatlistChannel)
-
-
+   let user = yield select(getUser)
 
      if(user.position ==='manager'){
 
-       yield put({type:'UPDATE_CHATLIST',payload:data2})
+      // yield put({type:'UPDATE_CHATLIST',payload:data2})
 
         //yield fork(listenToChatTranfers)
 
-
-
      }
-     else if(user.position ==='staff'){
+      if(user.position ==='staff'){
 
 
-     yield fork(watchOnMessages);
+     yield fork(watchOnMessages)
 
 
 
@@ -165,7 +166,7 @@ export function* watchOnPings(){
 
 
     }catch(err){
-      console.error('socket err',err)
+      console.error('err',err)
     }
 
 

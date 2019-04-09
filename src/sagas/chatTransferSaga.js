@@ -1,6 +1,6 @@
 
 
-import {take,select} from 'redux-saga/effects';
+import {take,select,put} from 'redux-saga/effects';
 
 import {getGroupName} from '../utils.js'
 
@@ -25,8 +25,20 @@ export function* transferChat(){
 
    const firebase = yield select(getFirebase);
 
- console.log('pyload',payload);
+ console.log('payload',payload);
 
    let ref =  firebase.database().ref(`groups/${sortedGroupID}`).update({status:payload})
 
+
+      yield put({type:'CHANGE_CHAT_SERVICE',payload:payload})
+
 }
+
+// export function* listenToChatTranfers(){
+//
+//
+//
+//
+//
+//
+// }
