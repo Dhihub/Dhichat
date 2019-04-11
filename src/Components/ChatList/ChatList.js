@@ -14,9 +14,9 @@ import {ChatList as List,ChatListItem, Avatar, Column,Row,Title,Subtitle} from '
 
 render(){
 
+  const list= []
 
-
-      const chatList = this.props.chatList.map((list)=>{
+      const chatList = list.map((list)=>{
 
 
     if(list.uid === this.props.user.uid){
@@ -56,7 +56,7 @@ render(){
   return (
     <List style={{ maxWidth: 300 }}>
 
-       {chatList}
+
   </List>
   )
 }
@@ -66,7 +66,7 @@ render(){
 const mapStateToProps = (state)=>{
 
   return {
-  chatList: state.chatReducer.chatList,
+
   user: state.authReducer.user
 }
 }

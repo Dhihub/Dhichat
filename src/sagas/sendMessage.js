@@ -27,7 +27,7 @@ let storyid='5a439b8bb9677d000790134d'
       },
       method: 'POST',
       body: JSON.stringify({
-        sessionId: "iefjiorhjo23",
+        sessionId: "iefjiorhjo25",
         query: message,
         storyId: storyid,
       }),
@@ -102,6 +102,7 @@ let ref =  firebase.database().ref(`groups/${groupName}/messages`).push(data)
 
 }
 
+  yield put({type:'CLEAR_MESSAGE_FIELD',payload:''})
 
 
 
@@ -125,6 +126,8 @@ while(true){
     try{
 
       yield call(handleSendMessage,firebase,user,currentChat,message,chatService)
+
+
 
     }catch(e){
 

@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import ChatList from '../ChatList/ChatList'
 import MessageList from '../MessageList/MessageList'
 import Info from '../Info/Info.js'
+import UserList from '../UserList/UserList'
 import {ChatContainer} from './Style.js'
 import AppHeader from '../AppHeader/AppHeader'
 
@@ -16,7 +17,7 @@ class Chat extends Component {
 
     console.log('firebbase',this.props.firebase)
 
-    
+
     return(
 
 
@@ -32,7 +33,7 @@ class Chat extends Component {
 <MessageList />
 </div>
 <div style = {{gridArea:'info'}}>
-<Info />
+<UserList />
 </div>
 
 

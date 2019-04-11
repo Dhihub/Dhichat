@@ -12,6 +12,7 @@ import {watchOnMessages} from './messageSaga.js'
 import {sendMessageSaga} from './sendMessage.js'
 import {transferChat} from './chatTransferSaga.js'
 import {userRegisteredChannel} from './userRegisteredChannel.js'
+import {setCurrentChat} from './setCurrentChat'
 
 const getUser = (state)=> state.authReducer.user;
 const getFirebase = (state)=> state.firebaseReducer.firebase;
@@ -60,17 +61,9 @@ const unsubscribe = firebase.auth().onAuthStateChanged((user)=>{
         )
 
 
-     // groups.update({
-     //
-     //   [getGroupName(user.uid)]:{
-     //
-     //   status:'botEngine'
-     //
-     //  }
-     //
-     //
-     // })
-     //
+
+
+
 
 
        emit({type:'SIGNIN_SUCCESS',payload:{
@@ -94,7 +87,7 @@ return unsubscribe;
    })
     }
 
-    function createChatListChannel(firebase){
+    function createUsersChannel(firebase){
 
       return eventChannel(emit=>{
 
@@ -138,31 +131,24 @@ export function* watchOnPings(){
 
       const authChannel = yield call(createAuthChannel,payload)
 
-      const chatlistChannel = yield call(createChatListChannel,payload)
+      const usersChannel = yield call(createUsersChannel,payload)
+
+
+
      while(true){
 
     try{
       const data = yield take(authChannel)
+
       yield put({type:data.type,payload:data.payload})
-       fork(watchOnMessages)
 
-   let user = yield select(getUser)
+       const users = yield take(usersChannel)
 
-     if(user.position ==='manager'){
+       let user = yield select(getUser)
 
-      // yield put({type:'UPDATE_CHATLIST',payload:data2})
-
-        //yield fork(listenToChatTranfers)
-
-     }
-      if(user.position ==='staff'){
-
+     yield put({type:'UPDATE_USERS',payload:users})
 
      yield fork(watchOnMessages)
-
-
-
-     }
 
 
     }catch(err){
@@ -186,6 +172,7 @@ export function* rootSaga(){
    yield all([
 
   fork(watchOnPings),
+  fork(setCurrentChat),
   fork(sendMessageSaga),
   fork(transferChat)
 

@@ -64,7 +64,7 @@ class MessageList extends Component {
   })
 
 
-if(this.props.currentChat.name==''){
+if(!this.props.currentChat){
 
 
   return (<h2 style={{textAlign:"center"}}>no chat selected</h2>)
@@ -155,7 +155,21 @@ return(
   dispatch({type:'SEND_MESSAGE_REQUEST'})
 }
 
-}} >
+}} onKeyDown = {(e)=>{
+  if(e.key ==='Enter'){
+
+    if(messageInput.length>1){
+
+  dispatch({type:'SEND_MESSAGE_REQUEST'})
+}
+
+
+
+  }
+
+
+
+}}>
   <Row align="center">
     <IconButton fit>
       <AddIcon />

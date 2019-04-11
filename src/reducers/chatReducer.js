@@ -3,7 +3,7 @@
   const initialState ={
 
    chatService: 'botEngine',
-    chatList: [],
+    users: [],
     chatSelected: false,
     currentChat:{
      name: ''
@@ -26,9 +26,9 @@ case 'CHANGE_CHAT_SERVICE':
 return {...state, chatService:action.payload}
 
 
-case 'UPDATE_CHATLIST':
+case 'UPDATE_USERS':
 
-return {...state,chatList:action.payload}
+return {...state,users:action.payload}
 
 
 case 'SET_CURRENT_CHAT':
@@ -37,7 +37,7 @@ case 'SET_CURRENT_CHAT':
 
 
 
-return {...state,messages:action.payload.messages,currentChat:action.payload.receiver}
+return {...state,currentChat:action.payload}
 
 
 default: return state
