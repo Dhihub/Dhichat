@@ -8,16 +8,10 @@ import {getGroupName,getMessages} from '../utils.js'
 const getUser = (state)=> state.authReducer.user;
 const getFirebase = (state)=> state.firebaseReducer.firebase;
 const getCurrentChat = (state)=> state.chatReducer.currentChat
-const getReceiver = state=> state.chatReducer.receiver
+
 
 
  function createChatChannel(firebase,user,reciever){
-
-
-
-
-
-
 
 
 return eventChannel(emit=>{
@@ -42,7 +36,7 @@ return unsubscribe
 })
 }
 
-  let receiver = {name:'david john',uid:'1LePBgFcMrPLd9gA9bP7vBxrkB83'}
+  //let receiver = {name:'david john',uid:'1LePBgFcMrPLd9gA9bP7vBxrkB83'}
 
 
 export function* watchOnMessages(){
@@ -68,12 +62,12 @@ export function* watchOnMessages(){
 
     yield put({type:'SET_CHAT_GROUPS',payload:chatGroups})
 
-      const reciever = yield select(getReceiver);
+      const currentChat = yield select(getCurrentChat);
 
-      console.log('receiver',receiver)
 
-   let messages = getMessages(user.uid,chatGroups,receiver.uid)
 
+   let messages = getMessages(user.uid,chatGroups,currentChat)
+     console.log("messages",messages)
 
     yield put({type:'UPDATE_MESSAGES',payload:messages})
 

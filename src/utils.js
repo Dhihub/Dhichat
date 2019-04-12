@@ -10,9 +10,13 @@ return groupId.split('').sort().join('')
 }
 
 
-export const getMessages= (userId,chatGroups,receiverId)=>{
+export const getMessages= (userId,chatGroups,receiver)=>{
 
-  let groupName = getGroupName(userId,'',receiverId)
+   if(receiver==null){
+     return
+   }
+
+  let groupName = getGroupName(userId,'',receiver.uid)
 
    let messages = {};
    let chatService = '';
