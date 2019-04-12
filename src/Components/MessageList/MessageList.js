@@ -34,6 +34,7 @@ class MessageList extends Component {
 
 
 
+
   render(){
 
   const  {socket,dispatch,messageInput} = this.props;
@@ -53,8 +54,6 @@ class MessageList extends Component {
          </Message>
 
        </MessageGroup>
-
-
 
 
   )
@@ -78,7 +77,7 @@ return(
 
 
 
-<div style={{height:'400px'}}>
+<div style={{height:'550px'}}>
 
 
 

@@ -1,4 +1,8 @@
 
+ import {getGroupName} from '../utils.js'
+
+
+
 
   const initialState ={
 
@@ -6,10 +10,11 @@
     users: [],
     chatSelected: false,
     currentChat:{
-     name: ''
-
-
+     name: '',
+     status:''
    },
+
+
    messages:[]
   }
 
@@ -33,11 +38,17 @@ return {...state,users:action.payload}
 
 case 'SET_CURRENT_CHAT':
 
-   let messages = action.payload;
 
 
 
-return {...state,currentChat:action.payload}
+
+
+
+return {...state,currentChat:action.payload.receiver,messages:Object.values(action.payload.messages)}
+
+case "SET_CHAT_GROUPS":
+
+return {...state,chatGroups:action.payload}
 
 
 default: return state

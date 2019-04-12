@@ -64,7 +64,7 @@ class App extends Component {
    this.props.dispatch({type:'SET_FIREBASE_REQUEST',payload:firebase})
 
 
-   
+
 
 
 
@@ -100,7 +100,7 @@ class App extends Component {
 
     return (
 
-  <div>
+  <div >
 
 
  <Route exact path ='/' render = {()=>{

@@ -1,17 +1,10 @@
 
 
-export const getGroupName =userId=>{
+export const getGroupName =(userId,botEngineToken='',recieverId)=>{
 
-let groupId = userId+"1LePBgFcMrPLd9gA9bP7vBxrkB83"
+let groupId = userId+botEngineToken+recieverId
 
 return groupId.split('').sort().join('')
-
-
-
-
-
-
-
 
 
 }

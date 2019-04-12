@@ -3,7 +3,7 @@ import axios from 'axios'
 
 
  import {delay,eventChannel} from 'redux-saga'
-import {takeEvery,put,call,take,fork,cancelled,cancel,all,apply,select} from 'redux-saga/effects';
+  import {takeEvery,put,call,take,fork,cancelled,cancel,all,apply,select} from 'redux-saga/effects';
 
 import {getGroupName} from '../utils.js'
 
@@ -12,7 +12,7 @@ import {watchOnMessages} from './messageSaga.js'
 import {sendMessageSaga} from './sendMessage.js'
 import {transferChat} from './chatTransferSaga.js'
 import {userRegisteredChannel} from './userRegisteredChannel.js'
-import {setCurrentChat} from './setCurrentChat'
+import {setCurrentChatSaga} from './setCurrentChat'
 
 const getUser = (state)=> state.authReducer.user;
 const getFirebase = (state)=> state.firebaseReducer.firebase;
@@ -172,9 +172,10 @@ export function* rootSaga(){
    yield all([
 
   fork(watchOnPings),
-  fork(setCurrentChat),
+  fork(setCurrentChatSaga),
   fork(sendMessageSaga),
-  fork(transferChat)
+  fork(transferChat),
+
 
 
 

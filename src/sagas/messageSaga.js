@@ -15,16 +15,16 @@ const getCurrentChat = (state)=> state.chatReducer.currentChat
 
 
 
- let group = getGroupName(user.uid)
+ let group = getGroupName(user.uid,)
 
 
-console.log(user);
+
 
 return eventChannel(emit=>{
 
 
 
- const unsubscribe = firebase.database().ref(`groups/${group}/messages`).on('value',(chats)=>{
+ const unsubscribe = firebase.database().ref(`groups`).on('value',(chats)=>{
 
 console.log(chats.val());
 
@@ -61,10 +61,10 @@ export function* watchOnMessages(){
 
   while(true){
 
-   const messages = yield take(chatChannel)
-    console.log('messaqges',messages);
+   const messageList = yield take(chatChannel)
+    console.log('list',messageList);
 
-    //yield put({type:'SET_CURRENT_CHAT',payload:message})
+    yield put({type:'SET_CHAT_GROUPS',payload:messageList})
 
 
 
