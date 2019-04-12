@@ -9,23 +9,34 @@ const getChatGroups = state=>state.chatReducer.chatGroups
 
 const botEngineToken = '4cc01931fa302f2b50bcdeb70e961fc47d156face3bdb8b616e3e9f3e18e0cc8'
 
+
+
 const getMessages = (userId,chatGroups,receiverId)=>{
 
   let groupName = getGroupName(userId,'',receiverId)
 
    let messages = {};
+   let chatService = '';
            chatGroups.map((chatGroup)=>{
 
        if(chatGroup.groupName === groupName){
 
+       if(chatGroup.status==='botEngine'){
 
-        chatGroup.messages? messages = chatGroup.messages: messages = {}
+      // messages = getBotMessage(receiverId)
+       }
+       else {
+         chatGroup.messages? messages = chatGroup.messages: messages = {}
+       }
+
+        chatService = chatGroup.status
+
 
        }
 
   })
 
-  return messages
+  return {messages,chatService}
 
 
 }
@@ -45,13 +56,13 @@ function* setCurrentChat(receiver){
     yield firebase.database().ref(`BotGroups/${botGroupId}/user`).update(user)
     yield firebase.database().ref(`groups/${groupId}/user`).update(user)
     yield firebase.database().ref(`groups/${groupId}/receiver`).update(receiver)
-    yield firebase.database().ref(`groups/${groupId}`).update({status:"botEngine"})
+    yield firebase.database().ref(`groups/${groupId}`).update({status:"liveChat"})
     yield firebase.database().ref(`groups/${groupId}`).update({groupName:groupId})
 
-     let messages = getMessages(user.uid,chatGroups,receiver.uid)
-     console.log(messages)
+     let data = getMessages(user.uid,chatGroups,receiver.uid)
+     console.log(data)
 
-    yield put({type:'SET_CURRENT_CHAT',payload:{receiver,messages}})
+    yield put({type:'SET_CURRENT_CHAT',payload:{receiver,messages:data.messages,chatService:data.chatService}})
 
 
 }

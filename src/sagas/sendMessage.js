@@ -49,12 +49,13 @@ let storyid='5a439b8bb9677d000790134d'
 function* handleSendMessage(firebase,user,currentChat,message,chatService){
 
 
-  let groupName = getGroupName(user.uid)
+  //let groupName = getGroupName(user.uid)
 
 let data = {}
 
 if(chatService === 'botEngine'){
-console.log('bot engine')
+
+ let groupName = getGroupName(user.uid,botEngineClientToken,currentChat.uid)
 
     data = {
 
@@ -85,7 +86,7 @@ console.log('bot engine')
 } else if(chatService ==='liveChat'){
 
 
-
+let groupName = getGroupName(user.uid,"",currentChat.uid)
 
       data = {
 

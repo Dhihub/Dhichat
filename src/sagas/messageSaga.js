@@ -3,19 +3,19 @@ import {eventChannel} from 'redux-saga'
 import {takeEvery,put,call,take,all,apply,select} from 'redux-saga/effects';
 
 
-import {getGroupName} from '../utils.js'
+import {getGroupName,getMessages} from '../utils.js'
 
 const getUser = (state)=> state.authReducer.user;
 const getFirebase = (state)=> state.firebaseReducer.firebase;
 const getCurrentChat = (state)=> state.chatReducer.currentChat
-
+const getReceiver = state=> state.chatReducer.receiver
 
 
  function createChatChannel(firebase,user,reciever){
 
 
 
- let group = getGroupName(user.uid,)
+
 
 
 
@@ -61,11 +61,21 @@ export function* watchOnMessages(){
 
   while(true){
 
-   const messageList = yield take(chatChannel)
-    console.log('list',messageList);
+   const chatGroups = yield take(chatChannel)
+    console.log('list',chatGroups);
 
-    yield put({type:'SET_CHAT_GROUPS',payload:messageList})
 
+
+    yield put({type:'SET_CHAT_GROUPS',payload:chatGroups})
+
+      const reciever = yield select(getReceiver);
+
+      console.log('receiver',receiver)
+
+   let messages = getMessages(user.uid,chatGroups,receiver.uid)
+
+
+    yield put({type:'UPDATE_MESSAGES',payload:messages})
 
 
 
