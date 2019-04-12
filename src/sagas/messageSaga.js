@@ -71,15 +71,6 @@ export function* watchOnMessages(){
 
     yield put({type:'UPDATE_MESSAGES',payload:messages})
 
-
-
   }
-
-
-
-
-
-
-
 
 }
