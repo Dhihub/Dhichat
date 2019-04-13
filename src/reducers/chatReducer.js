@@ -46,12 +46,15 @@ case "SET_CHAT_GROUPS":
 
 return {...state,chatGroups:action.payload}
 
+case 'SET_BOT_GROUPS':
+
+return {...state,botGroups:action.payload}
 
 case 'UPDATE_MESSAGES':
 
 if(state.currentChat.name.length>2){
 
-  return {...state,messages:Object.values(action.payload.messages)}
+  return {...state,messages:Object.values(action.payload)}
 
        }
 

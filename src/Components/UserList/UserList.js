@@ -26,11 +26,6 @@ if(user.uid!== this.props.user.uid){
 <UserDiv onClick = {()=>{
 
 
-
-
-
-
-
   this.props.dispatch({type:'SET_CURRENT_CHAT_REQUEST',payload:user})
 
 
@@ -46,28 +41,14 @@ if(user.uid!== this.props.user.uid){
 }
 
 return;
-
-
-
 })
-
 
     return(
 
-
   <List>
-
-
-
    {users}
 
-
-
   </List>
-
-
-
-
 
     )
   }

@@ -8,6 +8,7 @@ import {getGroupName,getMessages} from '../utils.js'
 const getUser = (state)=> state.authReducer.user;
 const getFirebase = (state)=> state.firebaseReducer.firebase;
 const getCurrentChat = (state)=> state.chatReducer.currentChat
+const getBotGroups = state => state.chatReducer.botGroups
 
 
 
@@ -16,14 +17,15 @@ const getCurrentChat = (state)=> state.chatReducer.currentChat
 
 return eventChannel(emit=>{
 
-
-
  const unsubscribe = firebase.database().ref(`groups`).on('value',(chats)=>{
 
-console.log(chats.val());
+
 
 if(chats.val()){
+console.log('message groups',Object.values(chats.val()));
+
   emit(Object.values(chats.val()))
+
 }
 else
 emit([])
@@ -49,6 +51,7 @@ export function* watchOnMessages(){
     let firebase = yield select(getFirebase)
     let currentChat = yield select(getCurrentChat)
 
+
     const chatChannel = yield call(createChatChannel,firebase,user,currentChat)
   //let chats =  yield call(getChat,user,firebase,receiver)
 
@@ -57,7 +60,7 @@ export function* watchOnMessages(){
 
    const chatGroups = yield take(chatChannel)
     console.log('list',chatGroups);
-
+  let botGroups = yield select(getBotGroups)
 
 
     yield put({type:'SET_CHAT_GROUPS',payload:chatGroups})
@@ -66,10 +69,10 @@ export function* watchOnMessages(){
 
 
 
-   let messages = getMessages(user.uid,chatGroups,currentChat)
-     console.log("messages",messages)
+   let data = getMessages(user.uid,chatGroups,botGroups,currentChat)
+     console.log("messages",data)
 
-    yield put({type:'UPDATE_MESSAGES',payload:messages})
+    yield put({type:'UPDATE_MESSAGES',payload:data.messages})
 
   }
 

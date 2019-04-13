@@ -13,6 +13,7 @@ import {sendMessageSaga} from './sendMessage.js'
 import {transferChat} from './chatTransferSaga.js'
 import {userRegisteredChannel} from './userRegisteredChannel.js'
 import {setCurrentChatSaga} from './setCurrentChat'
+import {watchOnBotMessages} from './botMessages'
 
 const getUser = (state)=> state.authReducer.user;
 const getFirebase = (state)=> state.firebaseReducer.firebase;
@@ -149,6 +150,7 @@ export function* watchOnPings(){
      yield put({type:'UPDATE_USERS',payload:users})
 
      yield fork(watchOnMessages)
+     yield fork(watchOnBotMessages)
 
 
     }catch(err){
@@ -174,7 +176,7 @@ export function* rootSaga(){
   fork(watchOnPings),
   fork(setCurrentChatSaga),
   fork(sendMessageSaga),
-  fork(transferChat),
+  fork(transferChat)
 
 
 

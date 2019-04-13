@@ -55,8 +55,10 @@ let data = {}
 
 if(chatService === 'botEngine'){
 
- let groupName = getGroupName(user.uid,botEngineClientToken,currentChat.uid)
 
+
+ let groupName = getGroupName(user.uid,botEngineClientToken,currentChat.uid)
+console.log('bot engine',groupName)
     data = {
 
       from:user.name,
@@ -66,7 +68,7 @@ if(chatService === 'botEngine'){
     }
 
 
-     let ref =  firebase.database().ref(`groups/${groupName}/messages`).push(data)
+     let ref =  firebase.database().ref(`BotGroups/${groupName}/messages`).push(data)
 
 
        const botResponse = yield call(sendQueryToBot,message)
@@ -80,7 +82,7 @@ if(chatService === 'botEngine'){
        }
        console.log(data)
 
- ref =  firebase.database().ref(`groups/${groupName}/messages`).push(data)
+ ref =  firebase.database().ref(`BotGroups/${groupName}/messages`).push(data)
 
 
 } else if(chatService ==='liveChat'){
@@ -135,9 +137,6 @@ while(true){
 
     }
 }
-
-
-
 
 
 
