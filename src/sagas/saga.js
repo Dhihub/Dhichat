@@ -151,6 +151,7 @@ export function* watchOnPings(){
 
      yield fork(watchOnMessages)
      yield fork(watchOnBotMessages)
+     //yield fork(watchOnChatTransfer)
 
 
     }catch(err){

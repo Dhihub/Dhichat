@@ -30,11 +30,6 @@ import {connect} from 'react-redux'
 class MessageList extends Component {
 
 
-
-
-
-
-
   render(){
 
   const  {socket,dispatch,messageInput} = this.props;
@@ -44,8 +39,7 @@ class MessageList extends Component {
 
   return (
 
-
-    <MessageGroup onlyFirstWithMeta  >
+    <MessageGroup onlyFirstWithMeta>
 
          <Message date={message.time} isOwn={user.uid === message.senderID} authorName={message.name}>
            <MessageText>
@@ -111,9 +105,6 @@ return(
  <button style={{marginLeft:'30px', height:'2em'}} onClick = {()=>{
 
    this.props.dispatch({type:'CHAT_TRANSFER_REQUEST',payload:'liveChat'})
-
-
-
 
  }}>transfer</button>
   </Column>

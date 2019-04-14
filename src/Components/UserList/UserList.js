@@ -33,8 +33,6 @@ if(user.uid!== this.props.user.uid){
 
 {user.name}
 
-
-
 </UserDiv>
   )
 

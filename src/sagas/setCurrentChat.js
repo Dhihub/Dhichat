@@ -54,13 +54,31 @@ function* setCurrentChat(receiver){
     const groupId = getGroupName(user.uid,'',receiver.uid)
 
 
-    yield firebase.database().ref(`BotGroups/${botGroupId}/client`).update(receiver)
-    yield firebase.database().ref(`BotGroups/${botGroupId}/user`).update(user)
-      yield firebase.database().ref(`BotGroups/${botGroupId}`).update({groupName:botGroupId})
-    yield firebase.database().ref(`groups/${groupId}/user`).update(user)
-    yield firebase.database().ref(`groups/${groupId}/receiver`).update(receiver)
-    yield firebase.database().ref(`groups/${groupId}`).update({status:"botEngine"})
-    yield firebase.database().ref(`groups/${groupId}`).update({groupName:groupId})
+    // yield firebase.database().ref(`BotGroups/${botGroupId}/client`).update(receiver)
+    // yield firebase.database().ref(`BotGroups/${botGroupId}/user`).update(user)
+    // yield firebase.database().ref(`BotGroups/${botGroupId}`).update({groupName:botGroupId})
+
+   yield firebase.database().ref(`BotGroups/${botGroupId}`).update({
+     client:receiver,
+     user:user,
+     groupName:botGroupId,
+
+   })
+
+    // yield firebase.database().ref(`groups/${groupId}/user`).update(user)
+    // yield firebase.database().ref(`groups/${groupId}/receiver`).update(receiver)
+    // yield firebase.database().ref(`groups/${groupId}`).update({status:"botEngine"})
+    // yield firebase.database().ref(`groups/${groupId}`).update({groupName:groupId})
+
+
+yield firebase.database().ref(`groups/${groupId}`).update({
+
+  user:user,
+  receiver:receiver,
+  status:'botEngine',
+  groupName:groupId
+})
+
 
      let data = getMessages(user.uid,chatGroups,botGroups,receiver)
      console.log('data',data)
