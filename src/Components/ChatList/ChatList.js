@@ -14,15 +14,13 @@ import {ChatList as List,ChatListItem, Avatar, Column,Row,Title,Subtitle} from '
 
 render(){
 
-  const list= []
-
-      const chatList = list.map((list)=>{
 
 
-    if(list.uid === this.props.user.uid){
-      return;
-    }
-    else {
+      const chatList = this.props.chatList.map((list)=>{
+
+
+
+
     return(
 
      <ChatListItem onClick = {()=>{
@@ -34,7 +32,7 @@ render(){
      <Column full>
 
       <Row justify>
-     <Title ellipsis>{list.name}</Title>
+     <Title ellipsis>{list.receiver.name}</Title>
      <Subtitle nowrap>{'14:31 PM'}</Subtitle>
 
 
@@ -50,12 +48,11 @@ render(){
 
     )
 
-}
 
       })
   return (
     <List style={{ maxWidth: 300 }}>
-
+  {chatList}
 
   </List>
   )
@@ -67,7 +64,8 @@ const mapStateToProps = (state)=>{
 
   return {
 
-  user: state.authReducer.user
+  user: state.authReducer.user,
+  chatList:state.chatReducer.chatList
 }
 }
 

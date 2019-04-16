@@ -77,3 +77,21 @@ return messages
 
 
 }
+
+export const getChatList = (userId,chatGroups)=>{
+
+
+        let chatList = chatGroups.map((chatGroup)=>{
+
+           if(chatGroup.user.id === userId){
+
+
+       return chatGroup
+
+           }
+        })
+
+return chatList
+
+
+}

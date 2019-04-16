@@ -18,7 +18,8 @@ import {connect} from 'react-redux'
      messages: state.chatReducer.messages,
      currentChat:state.chatReducer.currentChat,
      user:state.authReducer.user,
-     chatService:state.chatReducer.chatService
+     chatService:state.chatReducer.chatService,
+     currentChat:state.chatReducer.currentChat
    }
  }
 
@@ -57,7 +58,7 @@ class MessageList extends Component {
   })
 
 
-if(!this.props.currentChat){
+if(this.props.currentChat.name===""){
 
 
   return (<h2 style={{textAlign:"center"}}>no chat selected</h2>)

@@ -3,7 +3,7 @@ import {eventChannel} from 'redux-saga'
 import {takeEvery,put,call,take,all,apply,select} from 'redux-saga/effects';
 
 
-import {getGroupName,getMessages} from '../utils.js'
+import {getGroupName,getMessages,getChatList} from '../utils.js'
 
 const getUser = (state)=> state.authReducer.user;
 const getFirebase = (state)=> state.firebaseReducer.firebase;
@@ -20,7 +20,7 @@ return eventChannel(emit=>{
  const unsubscribe = firebase.database().ref(`groups`).on('value',(chats)=>{
 
  if(chats.val()){
-  console.log('message groups',Object.values(chats.val()));
+console.log('message groups',Object.values(chats.val()));
 
   emit(Object.values(chats.val()))
 
@@ -69,9 +69,14 @@ export function* watchOnMessages(){
 
    let data = getMessages(user.uid,chatGroups,botGroups,currentChat)
      console.log("messages",data)
-
     yield put({type:'UPDATE_MESSAGES',payload:data.messages})
+    let chatList = getChatList(user.id,chatGroups)
+  if(chatList.length>1){
 
+    console.log('chatlist')
+    yield put({type:'UPDATE_CHATLIST', payload:chatList})
+
+  }
   }
 
 }

@@ -16,13 +16,10 @@ export function* transferChat(){
    let user = yield select(getUser)
    let currentChat = yield select(getCurrentChat);
 
-   let sortedGroupID = getGroupName(user.uid,'',currentChat.uid);
+   let sortedGroupID = getGroupName(user.uid,'',currentChat.uid)
+   console.log('sorte',sortedGroupID,payload)
 
-
-
-  console.log('sorte',sortedGroupID,payload)
-
-
+ 
    const firebase = yield select(getFirebase);
 
 

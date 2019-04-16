@@ -10,12 +10,12 @@
     users: [],
     chatSelected: false,
     currentChat:{
-     name: '',
-     status:''
+    name:'',
    },
   receiver:{},
 
-   messages:[]
+   messages:[],
+   chatList:[]
   }
 
 
@@ -59,6 +59,11 @@ if(state.currentChat.name.length>2){
        }
 
 return {...state}
+
+
+case 'UPDATE_CHATLIST':
+
+return {...state,chatList:action.payload}
 
 default: return state
 
