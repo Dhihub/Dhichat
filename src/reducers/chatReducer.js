@@ -26,7 +26,7 @@ export default (state=initialState,action={})=>{
 switch(action.type){
 
 
-case 'CHANGE_CHAT_SERVICE':
+case 'SET_CHATSERVICE':
 
 return {...state, chatService:action.payload}
 

@@ -72,7 +72,7 @@ return(
 
 
 
-<div style={{height:'550px'}}>
+<div style={{height:'550px',boxShadow: '10px -4px 20px -4px rgba(0,0,0,0.27)'}} >
 
 
 
@@ -95,7 +95,7 @@ return(
 
 }
 {
-  this.props.chatService =='botEngine' &&
+  this.props.chatService ==='botEngine' &&
   (
 <AgentBar>
 <Avatar imgUrl="https://livechat.s3.amazonaws.com/default/avatars/male_8.jpg" />
@@ -105,7 +105,7 @@ return(
   <Column>
  <button style={{marginLeft:'30px', height:'2em'}} onClick = {()=>{
 
-   this.props.dispatch({type:'CHAT_TRANSFER_REQUEST',payload:'liveChat'})
+   this.props.dispatch({type:'CHAT_TRANSFER_REQUEST',payload:'liveChat',messages:this.props.messages})
 
  }}>transfer</button>
   </Column>

@@ -47,8 +47,7 @@ function* setCurrentChat(receiver){
 
     const user = yield select(getUser)
     let firebase = yield select(getFirebase)
-    let chatGroups = yield select(getChatGroups)
-    let botGroups = yield select(getBotGroups)
+
     const botGroupId = getGroupName(user.uid,botEngineToken,receiver.uid)
 
     const groupId = getGroupName(user.uid,'',receiver.uid)
@@ -71,14 +70,10 @@ function* setCurrentChat(receiver){
     // yield firebase.database().ref(`groups/${groupId}`).update({groupName:groupId})
 
 
-yield firebase.database().ref(`groups/${groupId}`).update({
+yield firebase.database().ref(`groups/${groupId}`).update({status:'botEngine',user:user,receiver:receiver,groupName:groupId})
 
-  user:user,
-  receiver:receiver,
-  status:'botEngine',
-  groupName:groupId
-})
-
+let chatGroups = yield select(getChatGroups)
+let botGroups = yield select(getBotGroups)
 
      let data = getMessages(user.uid,chatGroups,botGroups,receiver)
      console.log('data',data)
@@ -98,6 +93,8 @@ while(true){
 
 
 const {payload} = yield take('SET_CURRENT_CHAT_REQUEST')
+
+
 
 yield call(setCurrentChat,payload)
 

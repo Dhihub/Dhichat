@@ -1,6 +1,6 @@
 
 
-import {take,select,put} from 'redux-saga/effects';
+import {take,select,put,call} from 'redux-saga/effects';
 import {eventChannel} from 'redux-saga'
 
 import {getGroupName} from '../utils.js'
@@ -9,28 +9,52 @@ const getFirebase = state => state.firebaseReducer.firebase
 const getUser = state=> state.authReducer.user
 
 const getCurrentChat =state=> state.chatReducer.currentChat
+const getMessages = state => state.chatReducer.Messages
 
-export function* transferChat(){
+export function* transferChatSaga(){
 
-   const {payload} = yield take('CHAT_TRANSFER_REQUEST');
+  while(true){
+
+   const {payload,messages} = yield take('CHAT_TRANSFER_REQUEST');
    let user = yield select(getUser)
    let currentChat = yield select(getCurrentChat);
+  // let messages = yield select(getMessages)
 
-   let sortedGroupID = getGroupName(user.uid,'',currentChat.uid)
-   console.log('sorte',sortedGroupID,payload)
-
- 
+   let groupName = getGroupName(user.uid,'',currentChat.uid)
    const firebase = yield select(getFirebase);
 
 
- console.log('payload',payload);
-
-   let ref =  firebase.database().ref(`groups/${sortedGroupID}`).update({status:payload})
 
 
-      yield put({type:'CHANGE_CHAT_SERVICE',payload:payload})
+ yield call(transferChat,firebase,payload,messages,groupName)
 
 }
+
+
+
+}
+
+function* transferChat(firebase,payload,messages,groupName){
+//let messages2 = yield select(getMessages)
+console.log('messages',...messages);
+
+
+ yield put({type:'CHANGE_CHAT_SERVICE',payload:payload})
+
+  let ref =  firebase.database().ref(`groups/${groupName}`).update({status:payload,messages:{...messages}})
+   // let ref2 = firebase.database().ref(`groups/${groupName}`).update({
+   //    messages:{...messages}
+   // })
+
+
+
+
+
+}
+
+
+
+
 
 
 // function chatServiceChannel(){

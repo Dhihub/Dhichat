@@ -21,7 +21,8 @@ MessageList:{
 
 css:{
     backgroundColor:"#F7444E",
-    borderRadius:'0px'
+    borderRadius:'0px',
+
 }
 
 
@@ -29,7 +30,8 @@ css:{
 AgentBar:{
   css:{
     backgroundColor:"#F7444E",
-    border:'1px solid black'
+    border:'1px solid black',
+    borderRadius:'0px'
   }
 }
 

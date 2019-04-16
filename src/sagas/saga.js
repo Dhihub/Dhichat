@@ -10,7 +10,7 @@ import {getGroupName} from '../utils.js'
 
 import {watchOnMessages} from './messageSaga.js'
 import {sendMessageSaga} from './sendMessage.js'
-import {transferChat} from './chatTransferSaga.js'
+import {transferChatSaga} from './chatTransferSaga.js'
 import {userRegisteredChannel} from './userRegisteredChannel.js'
 import {setCurrentChatSaga} from './setCurrentChat'
 import {watchOnBotMessages} from './botMessages'
@@ -177,7 +177,7 @@ export function* rootSaga(){
   fork(watchOnPings),
   fork(setCurrentChatSaga),
   fork(sendMessageSaga),
-  fork(transferChat)
+  fork(transferChatSaga)
 
 
 
