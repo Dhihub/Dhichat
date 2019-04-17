@@ -1,12 +1,19 @@
 
 let botEngineClientToken = '4cc01931fa302f2b50bcdeb70e961fc47d156face3bdb8b616e3e9f3e18e0cc8'
 
-export const getGroupName =(userId,botEngineToken='',recieverId)=>{
+export const getGroupName =(userId,recieverId)=>{
 
-let groupId = userId+botEngineToken+recieverId
+let groupId = userId+recieverId
 
 return groupId.split('').sort().join('')
 
+
+}
+
+
+export const getBotGroupName = (userId,botId,receiverId)=> {
+
+return (userId+botId+receiverId)
 
 }
 
@@ -21,7 +28,7 @@ export const getMessages= (userId,chatGroups,botGroups,receiver)=>{
 
 
 
-  let groupName = getGroupName(userId,'',receiver.uid)
+  let groupName = getGroupName(userId,receiver.uid)
  console.log('grouoname',groupName)
    let messages = {};
    let chatService = '';
@@ -59,7 +66,7 @@ export const getMessages= (userId,chatGroups,botGroups,receiver)=>{
 
 function getBotMessage(userId,receiverId,botGroups){
 
- let groupId = getGroupName(userId,botEngineClientToken,receiverId)
+ let groupId = getBotGroupName(userId,botEngineClientToken,receiverId)
  console.log('bo group',groupId)
  let messages ={}
     botGroups.map((botGroup)=>{

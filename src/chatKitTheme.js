@@ -11,7 +11,7 @@ MessageText:{
 
     backgroundColor:'black',
     color:'white',
-    borderRadius:'20px'
+    borderRadius:'20px 20px 20px 40px'
 
   }
 

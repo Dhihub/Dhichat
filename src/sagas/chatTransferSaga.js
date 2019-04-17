@@ -20,7 +20,7 @@ export function* transferChatSaga(){
    let currentChat = yield select(getCurrentChat);
   // let messages = yield select(getMessages)
 
-   let groupName = getGroupName(user.uid,'',currentChat.uid)
+   let groupName = getGroupName(user.uid,currentChat.uid)
    const firebase = yield select(getFirebase);
 
 
@@ -41,10 +41,8 @@ console.log('messages',...messages);
 
  yield put({type:'CHANGE_CHAT_SERVICE',payload:payload})
 
-  let ref =  firebase.database().ref(`groups/${groupName}`).update({status:payload,messages:{...messages}})
-   // let ref2 = firebase.database().ref(`groups/${groupName}`).update({
-   //    messages:{...messages}
-   // })
+  let ref =  firebase.database().ref(`groups/${groupName}`).update({status:payload})
+    //let ref =  firebase.database().ref(`groups/${groupName}`).update({status:payload,messages:{...messages}})
 
 
 

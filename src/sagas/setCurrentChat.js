@@ -1,6 +1,6 @@
 
 import {take,put,select,takeEvery,call} from 'redux-saga/effects'
-import {getGroupName,getMessages} from '../utils.js'
+import {getGroupName,getMessages,getBotGroupName} from '../utils.js'
 
 
 const getFirebase = state => state.firebaseReducer.firebase
@@ -48,9 +48,9 @@ function* setCurrentChat(receiver){
     const user = yield select(getUser)
     let firebase = yield select(getFirebase)
 
-    const botGroupId = getGroupName(user.uid,botEngineToken,receiver.uid)
+    const botGroupId = getBotGroupName(user.uid,botEngineToken,receiver.uid)
 
-    const groupId = getGroupName(user.uid,'',receiver.uid)
+    const groupId = getGroupName(user.uid,receiver.uid)
 
 
     // yield firebase.database().ref(`BotGroups/${botGroupId}/client`).update(receiver)

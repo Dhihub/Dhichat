@@ -5,7 +5,7 @@ import {delay,eventChannel} from 'redux-saga'
 import {takeEvery,put,call,take,fork,cancelled,cancel,all,apply,select} from 'redux-saga/effects';
 
 
-import {getGroupName} from '../utils.js'
+import {getGroupName,getBotGroupName} from '../utils.js'
 
 const getUser = (state)=> state.authReducer.user;
 const getFirebase = (state)=> state.firebaseReducer.firebase;
@@ -57,7 +57,7 @@ if(chatService === 'botEngine'){
 
 
 
- let groupName = getGroupName(user.uid,botEngineClientToken,currentChat.uid)
+ let groupName = getBotGroupName(user.uid,botEngineClientToken,currentChat.uid)
 console.log('bot engine',groupName)
     data = {
 
@@ -88,7 +88,7 @@ console.log('bot engine',groupName)
 } else if(chatService ==='liveChat'){
 
 
-let groupName = getGroupName(user.uid,"",currentChat.uid)
+let groupName = getGroupName(user.uid,currentChat.uid)
 
       data = {
 
