@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
 
 import {AgentBar,Column,Title,Avatar,FixedWrapper, MessageList as List,Message,MessageGroup,
-  MessageText,TextComposer,Row,IconButton,AddIcon,TextInput,SendButton,EmojiIcon
+  MessageText,TextComposer,Row,IconButton,AddIcon,TextInput,SendButton,EmojiIcon,MessageButtons,MessageButton
 
 } from '@livechat/ui-kit'
 
@@ -43,9 +43,23 @@ class MessageList extends Component {
     <MessageGroup onlyFirstWithMeta>
 
          <Message date={message.time} isOwn={user.uid === message.senderID} authorName={message.name}>
+
            <MessageText>
              {message.text}
            </MessageText>
+
+{message.type ==='button' &&
+    <div>
+     <MessageButtons>
+      <MessageButton primary label="Confirm" />
+      <MessageButton label="Cancel" />
+    </MessageButtons>
+    </div>
+
+     }
+
+
+
          </Message>
 
        </MessageGroup>
@@ -105,7 +119,9 @@ return(
   <Column>
  <button style={{marginLeft:'30px', height:'2em'}} onClick = {()=>{
 
-   this.props.dispatch({type:'CHAT_TRANSFER_REQUEST',payload:'liveChat',messages:this.props.messages})
+   //this.props.dispatch({type:'CHAT_TRANSFER_REQUEST',payload:'liveChat',messages:this.props.messages})
+
+   this.props.dispatch({type:'CHAT_TRANSFER_REQUEST_MESSAGE'})
 
  }}>transfer</button>
   </Column>

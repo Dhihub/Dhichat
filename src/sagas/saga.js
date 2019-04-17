@@ -14,6 +14,7 @@ import {transferChatSaga} from './chatTransferSaga.js'
 import {userRegisteredChannel} from './userRegisteredChannel.js'
 import {setCurrentChatSaga} from './setCurrentChat'
 import {watchOnBotMessages} from './botMessages'
+import {chatTransferRequestMessageSaga} from './chatTransferRequestMessage'
 
 const getUser = (state)=> state.authReducer.user;
 const getFirebase = (state)=> state.firebaseReducer.firebase;
@@ -177,7 +178,8 @@ export function* rootSaga(){
   fork(watchOnPings),
   fork(setCurrentChatSaga),
   fork(sendMessageSaga),
-  fork(transferChatSaga)
+  fork(transferChatSaga),
+  fork(chatTransferRequestMessageSaga)
 
 
 

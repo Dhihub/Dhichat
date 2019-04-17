@@ -58,9 +58,10 @@ if(chatService === 'botEngine'){
 
 
  let groupName = getBotGroupName(user.uid,botEngineClientToken,currentChat.uid)
+
 console.log('bot engine',groupName)
     data = {
-
+      
       from:user.name,
       senderID:user.uid,
       text:message,

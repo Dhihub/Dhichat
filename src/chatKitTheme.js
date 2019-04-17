@@ -33,6 +33,13 @@ AgentBar:{
     border:'1px solid black',
     borderRadius:'0px'
   }
+},
+
+MessageButtons:{
+  css:{
+
+      backgroundColor:"white"
+  }
 }
 
 
