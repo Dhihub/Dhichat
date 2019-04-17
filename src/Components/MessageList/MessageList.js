@@ -50,8 +50,18 @@ class MessageList extends Component {
 
 {message.type ==='button' &&
     <div>
-     <MessageButtons>
-      <MessageButton primary label="Confirm" />
+     <MessageButtons onClick = {()=>{
+       console.log('clicked')
+ this.props.dispatch({type:'CHAT_TRANSFER_REQUEST',payload:'liveChat',messages:this.props.messages})
+
+
+     }}>
+      <MessageButton onClick = {()=>{
+        console.log('clicked')
+  this.props.dispatch({type:'CHAT_TRANSFER_REQUEST',payload:'liveChat',messages:this.props.messages})
+
+
+      }} primary label="Confirm" />
       <MessageButton label="Cancel" />
     </MessageButtons>
     </div>
