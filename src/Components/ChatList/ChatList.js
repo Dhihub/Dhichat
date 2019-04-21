@@ -19,10 +19,8 @@ render(){
       const chatList = this.props.chatList.map((list)=>{
 
 
-    if(list.uid === this.props.user.uid){
-      return;
-    }
-    else {
+
+
     return(
 
      <ChatListItem onClick = {()=>{
@@ -34,7 +32,7 @@ render(){
      <Column full>
 
       <Row justify>
-     <Title ellipsis>{list.name}</Title>
+     <Title ellipsis>{list.receiver.name}</Title>
      <Subtitle nowrap>{'14:31 PM'}</Subtitle>
 
 
@@ -50,13 +48,12 @@ render(){
 
     )
 
-}
 
       })
   return (
     <List style={{ maxWidth: 300 }}>
+  {chatList}
 
-       {chatList}
   </List>
   )
 }
@@ -66,8 +63,9 @@ render(){
 const mapStateToProps = (state)=>{
 
   return {
-  chatList: state.chatReducer.chatList,
-  user: state.authReducer.user
+
+  user: state.authReducer.user,
+  chatList:state.chatReducer.chatList
 }
 }
 

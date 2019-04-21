@@ -25,7 +25,7 @@ export default (state=initialState,action ={})=>{
 
     case 'SET_FIREBASE':
     let fb = {...action.payload}
-    console.log('fb',fb)
+    
 
 
 
@@ -33,7 +33,7 @@ export default (state=initialState,action ={})=>{
 
 
  case 'INITIAL_RECIEVED':
-  console.log(action)
+
 
  return {...state,message:action.payload}
 

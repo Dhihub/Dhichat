@@ -19,7 +19,7 @@
 
   case 'CLEAR_MESSAGE_FIELD':
 
-  return {...state,messageInput:''}
+  return {...state,messageInput:action.payload}
 
 default: return state
 
