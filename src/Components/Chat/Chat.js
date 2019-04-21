@@ -6,7 +6,7 @@ import Info from '../Info/Info.js'
 import UserList from '../UserList/UserList'
 import {ChatContainer} from './Style.js'
 import AppHeader from '../AppHeader/AppHeader'
-
+import SidePanel from '../SidePanel/SidePanel'
 
 class Chat extends Component {
 
@@ -23,17 +23,15 @@ class Chat extends Component {
 
 <ChatContainer>
 
-<div style = {{gridArea:'header'}}>
-<AppHeader/>
-</div>
-<div style = {{gridArea:'chatlist'}}>
-<ChatList />
+
+<div style = {{gridArea:'chatlist', background:'#E9C893'}}>
+<SidePanel/>
 </div>
 <div style = {{gridArea:'messagelist'}}>
 <MessageList />
 </div>
 <div style = {{gridArea:'info'}}>
-<UserList />
+
 </div>
 
 

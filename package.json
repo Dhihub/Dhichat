@@ -19,6 +19,7 @@
     "redux-saga": "^1.0.2",
     "save": "^2.3.3",
     "scripts": "^0.1.0",
+    "semantic-ui": "^2.4.2",
     "semantic-ui-react": "^0.86.0",
     "socket.io-client": "^2.2.0",
     "styled-components": "^4.2.0"
