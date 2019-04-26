@@ -42,7 +42,7 @@ class MessageList extends Component {
 
     <MessageGroup onlyFirstWithMeta>
 
-         <Message date={message.time} isOwn={user.uid === message.senderID} authorName={message.name}>
+         <Message date={'3:30'} isOwn={user.uid === message.senderID} authorName={message.name}>
 
            <MessageText>
              {message.text}

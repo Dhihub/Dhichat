@@ -61,11 +61,12 @@ if(chatService === 'botEngine'){
 
 console.log('bot engine',groupName)
     data = {
-      
+
       from:user.name,
       senderID:user.uid,
       text:message,
-      time:"3:30"
+      time:firebase.database.ServerValue.TIMESTAMP,
+      read:false 
     }
 
 
@@ -79,7 +80,8 @@ console.log('bot engine',groupName)
          from:'bot',
          senderID:botEngineClientToken,
          text:botResponse.result.fulfillment[0].message || botResponse.result.fulfillment[0].title,
-         time:"3:30"
+         time:"3:30",
+         read:false
        }
        console.log(data)
 
@@ -96,7 +98,8 @@ let groupName = getGroupName(user.uid,currentChat.uid)
         from:user.name,
         senderID:user.uid,
         text:message,
-        time:"3:30"
+        time:firebase.database.ServerValue.TIMESTAMP,
+        read:false
       }
 
 

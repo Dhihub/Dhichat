@@ -1,15 +1,15 @@
 import React,{Component} from 'react'
-import {Menu,Tab,Grid,Header,Icon,Label,Image,Button} from 'semantic-ui-react'
+import {Menu,Tab,Header,Icon,Label,Image,Button} from 'semantic-ui-react'
 
 import {connect} from 'react-redux'
 
 import MessagesPanel from '../MessagesPanel/MessagesPanel'
 import UserList from '../UserList/UserList'
-
+import {Container} from './Style.js'
 const panes = [
   { menuItem: (
       <Menu.Item key='messages'>
-        Messages<Label color='red'>15</Label>
+        Messages<Label  color='red'>15</Label>
       </Menu.Item>
     ), render: () => <Tab.Pane attached={true}> <MessagesPanel/> </Tab.Pane> },
   { menuItem: {content:'users',icon: 'users'}, render: () => <Tab.Pane attached={true}><UserList/></Tab.Pane> },
@@ -29,67 +29,43 @@ class SidePanel extends Component {
 render(){
   return(
 
-    <Grid size = 'large'
-     inverted
-     fixed = 'left'
-      vertical
-      style={{fontSize:'1.2rem' }}>
+    <Container>
 
-      <Grid.Column>
+      <div style={{flexArea:'header', justifySelf:'center'}}>
 
-  <Grid.Row style={{padding:'1.2em', margin:0}}>
-<Header inverted floated = "left" as = "h2">
+ <Header inverted floated = "left" as = "h2" style={{alignSelf:'center',marginTop:'1.5em'}}>
 
-<Icon name="chat"/>
+ <Icon name="chat"/>
 
-<Header.Content>DhiChat</Header.Content>
+ <Header.Content>DhiChat</Header.Content>
 
-</Header>
+ </Header>
+ </div>
 
-</Grid.Row>
+<div style={{gridArea:'tab'}}>
+ <Tab menu={{ color:'brown', inverted: false, attached: false, tabular: false }} panes={panes} />
+</div>
 
+<div style={{gridArea:'tab',gridArea:'',display:'flex', flexDirection:'column',marginTop:'20px',justifySelf:'center' }} >
 
-<Grid.Row style ={{margin:'17px'}}>
-  <Tab menu={{ color:'brown', inverted: false, attached: false, tabular: false }} panes={panes} />
-</Grid.Row>
-
-
-
-<Grid.Row>
-
-
-
-<Label as='a' color='black' style={{marginLeft:'30px'}} >
+<Label as='a' color='black' style={{marginBottom:'1.5em'}}>
     <Image avatar spaced='right' src='https://livechat.s3.amazonaws.com/default/avatars/male_8.jpg' />
     Signed in as {this.props.user.name}
   </Label>
 
-
-
-
-</Grid.Row>
-
-
-<Grid.Row style={{marginLeft:'70px',marginTop:"10px"}}>
-<Button basic color='red' content='SignOut' onClick ={()=>{
+<Button  basic color='red' content='Sign Out' onClick ={()=>{
   this.props.firebase.auth().signOut()
 
 this.props.history.push('/');
 }} />
-</Grid.Row>
+
+</div>
 
 
 
+   </Container>
 
 
-
-
-  </Grid.Column>
-
-
-
-
-         </Grid>
 
   )
 }

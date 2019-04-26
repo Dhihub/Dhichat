@@ -15,7 +15,8 @@
   receiver:{},
 
    messages:[],
-   chatList:[]
+   chatList:[],
+   chatGroups:[]
   }
 
 
