@@ -36,13 +36,13 @@ export function* transferChatSaga(){
 
 function* transferChat(firebase,payload,messages,groupName){
 //let messages2 = yield select(getMessages)
-console.log('messages',...messages);
+
 
 
  yield put({type:'CHANGE_CHAT_SERVICE',payload:payload})
 
   let ref =  firebase.database().ref(`groups/${groupName}`).update({status:payload})
-  
+
     //let ref =  firebase.database().ref(`groups/${groupName}`).update({status:payload,messages:{...messages}})
 
 

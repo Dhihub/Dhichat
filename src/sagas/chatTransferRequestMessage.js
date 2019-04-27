@@ -47,16 +47,27 @@ catch(e){
 function* chatTransferRequestMessage(firebase,user,currentChat){
 
 let groupName = getBotGroupName(currentChat.uid,botEngineClientToken,user.uid)
+let groupName2 = getBotGroupName(user.uid,botEngineClientToken,currentChat.uid)
 
   let message = {
+       from:'bot',
        type: 'button',
-       senderId:user.uid,
+       senderID:user.uid,
        text:`${user.name} would like to contact you`,
-       time:'3:30'
-
+       time:firebase.database.ServerValue.TIMESTAMP,
+       photoURL: `https://robohash.org/${currentChat.uid}`
 
   }
+  let message2 = {
+    from:'bot',
+    type: 'text',
+    senderID:user.uid,
+    text:`contact request sent to ${currentChat.name}`,
+    time:firebase.database.ServerValue.TIMESTAMP,
+    photoURL: `https://robohash.org/${currentChat.uid}`
 
-  const ref = yield firebase.database().ref(`BotGroups/${groupName}/messages`).push(message)
+  }
+const ref = yield firebase.database().ref(`BotGroups/${groupName2}/messages`).push(message2)
+  const ref2 = yield firebase.database().ref(`BotGroups/${groupName}/messages`).push(message)
 
 }

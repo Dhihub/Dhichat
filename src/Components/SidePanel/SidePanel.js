@@ -49,11 +49,11 @@ render(){
 <div style={{gridArea:'tab',gridArea:'',display:'flex', flexDirection:'column',marginTop:'20px',justifySelf:'center' }} >
 
 <Label as='a' color='black' style={{marginBottom:'1.5em'}}>
-    <Image avatar spaced='right' src='https://livechat.s3.amazonaws.com/default/avatars/male_8.jpg' />
+    <Image avatar spaced='right' src={this.props.user.photoURL} />
     Signed in as {this.props.user.name}
   </Label>
 
-<Button  basic color='red' content='Sign Out' onClick ={()=>{
+<Button  basic style={{color:'white'}} content='Sign Out' onClick ={()=>{
   this.props.firebase.auth().signOut()
 
 this.props.history.push('/');
