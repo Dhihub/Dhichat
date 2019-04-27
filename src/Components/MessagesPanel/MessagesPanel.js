@@ -15,7 +15,7 @@ displayChatGroups = chatGroups=>{
 
   }}>
 
-    <Image avatar src = 'https://react.semantic-ui.com/images/avatar/small/mark.png'/>
+    <Image avatar src = {chatGroup.members.member1.uid ===this.props.user.uid?chatGroup.members.member2.photoURL:chatGroup.members.member1.photoURL}/>
 
     <List.Content>
    <List.Header as='a'>
@@ -36,7 +36,7 @@ displayChatGroups = chatGroups=>{
 
     return(
 
-    <Grid style = {{background:'#E9C893'}}>
+    <Grid style = {{background:'#F7444E'}}>
 
    <Grid.Column>
 

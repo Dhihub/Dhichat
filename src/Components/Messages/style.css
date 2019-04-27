@@ -1,0 +1,24 @@
+
+
+.messages {
+  height:500px;
+  width:100vw;
+  overflow-y: scroll;
+}
+
+
+.message_form{
+
+
+
+}
+
+.message_self {
+
+
+  border-left:2px solid orange;
+  padding-left:10px;
+
+
+
+}

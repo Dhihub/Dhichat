@@ -7,7 +7,7 @@ import UserList from '../UserList/UserList'
 import {ChatContainer} from './Style.js'
 import AppHeader from '../AppHeader/AppHeader'
 import SidePanel from '../SidePanel/SidePanel'
-
+import Messages from '../Messages/Messages'
 class Chat extends Component {
 
 
@@ -24,11 +24,13 @@ class Chat extends Component {
 <ChatContainer>
 
 
-<div style = {{gridArea:'chatlist', background:'#E9C893',height:'100vh'}}>
+<div style = {{gridArea:'chatlist', background:'#F7444E',height:'100vh'}}>
 <SidePanel/>
 </div>
-<div style = {{gridArea:'messagelist'}}>
-<MessageList />
+<div style = {{gridArea:'messagelist', marginTop:'0',background:'#F7F8F3'}}>
+{/*<MessageList />*/}
+ {this.props.currentChat.name && <Messages/>}
+
 </div>
 <div style = {{gridArea:'info'}}>
 
@@ -51,7 +53,8 @@ class Chat extends Component {
 const mapStateToProps = (state)=>{
   return {
 
-    firebase: state.firebaseReducer.firebase
+    firebase: state.firebaseReducer.firebase,
+    currentChat:state.chatReducer.currentChat
   }
 }
 //<button onClick = {() => this.props.firebase.auth().signOut()}>sign out</button>

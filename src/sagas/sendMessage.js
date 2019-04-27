@@ -48,7 +48,7 @@ let storyid='5a439b8bb9677d000790134d'
 
 function* handleSendMessage(firebase,user,currentChat,message,chatService){
 
-
+yield put({type:'CLEAR_MESSAGE_FIELD',payload:''})
   //let groupName = getGroupName(user.uid)
 
 let data = {}
@@ -66,7 +66,8 @@ console.log('bot engine',groupName)
       senderID:user.uid,
       text:message,
       time:firebase.database.ServerValue.TIMESTAMP,
-      read:false 
+      read:false,
+      photoURL:user.photoURL
     }
 
 
@@ -80,8 +81,9 @@ console.log('bot engine',groupName)
          from:'bot',
          senderID:botEngineClientToken,
          text:botResponse.result.fulfillment[0].message || botResponse.result.fulfillment[0].title,
-         time:"3:30",
-         read:false
+         time:firebase.database.ServerValue.TIMESTAMP,
+         read:false,
+         photoURL:`https://robohash.org/${currentChat.uid}`
        }
        console.log(data)
 
@@ -99,7 +101,8 @@ let groupName = getGroupName(user.uid,currentChat.uid)
         senderID:user.uid,
         text:message,
         time:firebase.database.ServerValue.TIMESTAMP,
-        read:false
+        read:false,
+        photoURL:user.photoURL
       }
 
 
@@ -109,7 +112,7 @@ let ref =  firebase.database().ref(`groups/${groupName}/messages`).push(data)
 
 }
 
-  yield put({type:'CLEAR_MESSAGE_FIELD',payload:''})
+
 
 
 

@@ -42,7 +42,7 @@ class MessageList extends Component {
 
     <MessageGroup onlyFirstWithMeta>
 
-         <Message date={'3:30'} isOwn={user.uid === message.senderID} authorName={message.name}>
+         <Message date={'3:30 '} isOwn={user.uid === message.senderID} authorName={message.name}>
 
            <MessageText>
              {message.text}
@@ -84,7 +84,6 @@ class MessageList extends Component {
 
 if(this.props.currentChat.name===""){
 
-
   return (<h2 style={{textAlign:"center"}}>no chat selected</h2>)
 
 
@@ -97,10 +96,6 @@ return(
 
 
 <div style={{height:'650px',boxShadow: '10px -4px 20px -4px rgba(0,0,0,0.27)'}} >
-
-
-
-
 
 
  {
