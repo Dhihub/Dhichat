@@ -67,10 +67,12 @@ export function* watchOnMessages(){
 
 
    let data = getMessages(user.uid,chatGroups,botGroups,currentChat)
+
      console.log("messages",data)
     yield put({type:'UPDATE_MESSAGES',payload:data.messages})
     yield put({type:'SET_CHATSERVICE',payload:data.chatService})
-    let chatList = getChatList(user.id,chatGroups)
+    let chatList = getChatList(user.uid,chatGroups)
+
   if(chatList.length>1){
 
 

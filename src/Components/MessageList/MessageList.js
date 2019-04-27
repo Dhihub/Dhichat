@@ -6,7 +6,7 @@ import {AgentBar,Column,Title,Avatar,FixedWrapper, MessageList as List,Message,M
 } from '@livechat/ui-kit'
 
 import {connect} from 'react-redux'
-
+import {Button} from 'semantic-ui-react'
 
  const mapStateToProps =(state)=>{
 
@@ -42,7 +42,7 @@ class MessageList extends Component {
 
     <MessageGroup onlyFirstWithMeta>
 
-         <Message date={message.time} isOwn={user.uid === message.senderID} authorName={message.name}>
+         <Message date={'3:30'} isOwn={user.uid === message.senderID} authorName={message.name}>
 
            <MessageText>
              {message.text}
@@ -96,7 +96,7 @@ return(
 
 
 
-<div style={{height:'550px',boxShadow: '10px -4px 20px -4px rgba(0,0,0,0.27)'}} >
+<div style={{height:'650px',boxShadow: '10px -4px 20px -4px rgba(0,0,0,0.27)'}} >
 
 
 
@@ -127,13 +127,13 @@ return(
  <Title>Bot</Title>
   </Column>
   <Column>
- <button style={{marginLeft:'30px', height:'2em'}} onClick = {()=>{
+ <Button primary style={{marginLeft:'30px'}} onClick = {()=>{
 
    //this.props.dispatch({type:'CHAT_TRANSFER_REQUEST',payload:'liveChat',messages:this.props.messages})
 
    this.props.dispatch({type:'CHAT_TRANSFER_REQUEST_MESSAGE'})
 
- }}>transfer</button>
+ }}>transfer</Button>
   </Column>
 
 

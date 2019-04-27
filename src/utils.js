@@ -20,7 +20,7 @@ return (userId+botId+receiverId)
 
 export const getMessages= (userId,chatGroups,botGroups,receiver)=>{
 
-  console.log(userId,chatGroups,botGroups,receiver)
+  console.log('d',userId,chatGroups,botGroups,receiver)
 
    if(receiver==null){
      return
@@ -88,12 +88,11 @@ return messages
 export const getChatList = (userId,chatGroups)=>{
 
 
-        let chatList = chatGroups.map((chatGroup)=>{
+        let chatList = chatGroups.filter((chatGroup)=>{
 
-           if(chatGroup.user.id === userId){
+           if(chatGroup.members.member1.uid === userId || chatGroup.members.member2.uid===userId){
 
-
-       return chatGroup
+          return chatGroup
 
            }
         })

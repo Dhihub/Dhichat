@@ -51,7 +51,7 @@ let groupName = getBotGroupName(currentChat.uid,botEngineClientToken,user.uid)
   let message = {
        type: 'button',
        senderId:user.uid,
-       text:`${currentChat.name} would like to contact you`,
+       text:`${user.name} would like to contact you`,
        time:'3:30'
 
 

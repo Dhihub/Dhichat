@@ -16,6 +16,7 @@ import {setFirebase,setFirebaseDB } from './actions/firebaseDBactions.js'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
 
+
 firebase.initializeApp(config)
 
 
