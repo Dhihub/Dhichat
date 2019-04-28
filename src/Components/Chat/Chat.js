@@ -24,7 +24,7 @@ class Chat extends Component {
 <ChatContainer>
 
 
-<div style = {{gridArea:'chatlist', background:'#F7444E',height:'100vh'}}>
+<div style = {{gridArea:'chatlist', background:'#5568F1',height:'100vh'}}>
 <SidePanel/>
 </div>
 <div style = {{gridArea:'messagelist', marginTop:'0',background:'#F7F8F3'}}>

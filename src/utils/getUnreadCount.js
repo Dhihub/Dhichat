@@ -4,29 +4,34 @@ export default (chatGroup,userId)=>{
 
  let messages = [];
 
+console.log(chatGroup)
+
  if(chatGroup.messages){
 
+       let messagesArray = Object.values(chatGroup.messages)
 
-   messages = Object.values(chatGroup.messages).filter((message)=>{
+       console.log('countt',messagesArray)
 
-     console.log(message)
+   messages = messagesArray.filter((message)=>{
 
-     return !messages.read && chatGroup.messages.senderID !== userId
+
+
+
+           return !message.read && message.senderID !== userId
+
+
+
 
 
 
   })
 
 
-
-
  }
 
-
+console.log('count',messages)
 
  return messages.length;
-
-
 
 
 }

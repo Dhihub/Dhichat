@@ -7,28 +7,32 @@ class MessagesPanel extends Component{
 
 displayChatGroups = chatGroups=>{
 
-  return chatGroups.length>0 && chatGroups.map(chatGroup=>(
+  return chatGroups.length>0 && chatGroups.map(chatGroup=>{
 
-    <List.Item onClick = {() =>{
+
+    let receiver = chatGroup.members.member1.uid ===this.props.user.uid?chatGroup.members.member2:chatGroup.members.member1
+
+ return (
+    <List.Item  active={receiver.uid===this.props.currentChat.uid} divided verticalAlign='middle' onClick = {() =>{
       this.props.dispatch({type:'OPEN_CHAT_GROUP_REQUEST',
-    payload:chatGroup.members.member1.uid ===this.props.user.uid?chatGroup.members.member2:chatGroup.members.member1})
+    payload:receiver})
 
   }}>
 
-    <Image avatar src = {chatGroup.members.member1.uid ===this.props.user.uid?chatGroup.members.member2.photoURL:chatGroup.members.member1.photoURL}/>
+    <Image avatar src = {receiver.photoURL}/>
 
-    <List.Content>
-   <List.Header as='a'>
-   {chatGroup.members.member1.uid ===this.props.user.uid?chatGroup.members.member2.name:chatGroup.members.member1.name } {" "}
-   <Label  size='tiny' color='red'>{getUnreadCount(chatGroups,this.props.user.uid)}</Label> </List.Header>
-
+    <List.Content >
+   <List.Header as='' style={{color:'white'}} >
+   {receiver.name } {" "}
+   <Label  size='tiny' color='red'>{getUnreadCount(chatGroup,this.props.user.uid)}</Label> </List.Header>
+   {/*<List.Description>offline</List.Description>*/}
      </List.Content>
 
 
     </List.Item>
+)
 
-
-    ))
+} )
 
 }
 
@@ -36,11 +40,9 @@ displayChatGroups = chatGroups=>{
 
     return(
 
-    <Grid style = {{background:'#F7444E'}}>
+    <div >
 
-   <Grid.Column>
 
-  <Grid.Row >
      <Menu.Menu style ={{paddingBottom:'2em'}}>
 
        <Menu.Item>
@@ -54,10 +56,8 @@ displayChatGroups = chatGroups=>{
      </Menu.Menu>
 
 
-  </Grid.Row>
 
- <Grid.Row>
-  <List divided verticalAlign='middle' size ='big'>
+  <List selection divided verticalAlign='middle' size ='big'>
 
   {this.displayChatGroups(this.props.chatList)}
 
@@ -66,14 +66,11 @@ displayChatGroups = chatGroups=>{
 
 
 
- </Grid.Row>
-
-
-   </Grid.Column>
 
 
 
-    </Grid>
+
+    </div>
 
 
     )
@@ -84,7 +81,8 @@ const mapStateToProps = (state)=>{
   return{
     firebase:state.firebaseReducer.firebase,
     user:state.authReducer.user,
-    chatList:state.chatReducer.chatList
+    chatList:state.chatReducer.chatList,
+    currentChat:state.chatReducer.currentChat
   }
 }
 export default connect(mapStateToProps,null)(withRouter(MessagesPanel))

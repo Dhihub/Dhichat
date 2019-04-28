@@ -39,16 +39,11 @@ displayMessages = messages=>(
 
 </Comment.Group>
 
-
-
 </Segment>
 
 <MessageForm/>
 
 </React.Fragment>
-
-
-
 
     )
   }

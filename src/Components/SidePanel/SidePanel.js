@@ -11,8 +11,8 @@ const panes = [
       <Menu.Item key='messages'>
         Messages<Label  color='red'>15</Label>
       </Menu.Item>
-    ), render: () => <Tab.Pane attached={true}> <MessagesPanel/> </Tab.Pane> },
-  { menuItem: {content:'users',icon: 'users'}, render: () => <Tab.Pane attached={true}><UserList/></Tab.Pane> },
+    ), render: () => <Tab.Pane attached={true} style={{background:'#5568F1'}}> <MessagesPanel/> </Tab.Pane> },
+  { menuItem: {content:'users',icon: 'users'}, render: () => <Tab.Pane style={{background:'#5568F1'}} attached={true}><UserList/></Tab.Pane> },
 
 ]
 
@@ -43,7 +43,7 @@ render(){
  </div>
 
 <div style={{gridArea:'tab'}}>
- <Tab menu={{ color:'brown', inverted: false, attached: false, tabular: false }} panes={panes} />
+ <Tab menu={{ color:'', inverted: true, attached: true, tabular: false }} panes={panes} />
 </div>
 
 <div style={{gridArea:'tab',gridArea:'',display:'flex', flexDirection:'column',marginTop:'20px',justifySelf:'center' }} >

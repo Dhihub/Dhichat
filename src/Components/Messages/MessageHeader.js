@@ -6,8 +6,8 @@ class MessageHeader extends Component {
   render(){
     return (
 
-
-  <Segment clearing style={{background:'#002C3E',color:'white'}}>
+//#002C3E
+  <Segment clearing style={{background:'#5568F1',color:'white'}}>
 
 
 
@@ -17,7 +17,7 @@ class MessageHeader extends Component {
 
   {this.props.chatService ==='botEngine'? `${this.props.currentChat.name}'s Bot`: this.props.currentChat.name }
 
-  { this.props.chatService ==='botEngine' && <Button primary style={{marginLeft:'30px'}} onClick = {()=>{
+  { this.props.chatService ==='botEngine' && <Button style={{background:'red'}} primary style={{marginLeft:'30px'}} onClick = {()=>{
 
     this.props.dispatch({type:'CHAT_TRANSFER_REQUEST_MESSAGE',payload:'botEngine'})
 
