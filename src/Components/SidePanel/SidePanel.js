@@ -2,6 +2,7 @@ import React,{Component} from 'react'
 import {Menu,Tab,Header,Icon,Label,Image,Button} from 'semantic-ui-react'
 
 import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
 
 import MessagesPanel from '../MessagesPanel/MessagesPanel'
 import UserList from '../UserList/UserList'
@@ -19,7 +20,8 @@ const panes = [
 const mapStateToProps = (state)=>{
 
   return {
-    user: state.authReducer.user
+    user: state.authReducer.user,
+    firebase: state.firebaseReducer.firebase
   }
 }
 class SidePanel extends Component {
@@ -74,4 +76,4 @@ this.props.history.push('/');
 
 }
 
-export default connect(mapStateToProps,null)(SidePanel)
+export default connect(mapStateToProps,null)(withRouter(SidePanel))
