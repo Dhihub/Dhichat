@@ -20,9 +20,11 @@ return eventChannel(emit=>{
  const unsubscribe = firebase.database().ref(`groups`).on('value',(chats)=>{
 
  if(chats.val()){
+
 console.log('message groups',Object.values(chats.val()));
 
   emit(Object.values(chats.val()))
+
 
 }
 else

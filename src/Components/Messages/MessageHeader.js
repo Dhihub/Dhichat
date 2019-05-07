@@ -17,7 +17,7 @@ class MessageHeader extends Component {
 
   {this.props.chatService ==='botEngine'? `${this.props.currentChat.name}'s Bot`: this.props.currentChat.name }
 
-  { this.props.chatService ==='botEngine' && <Button style={{background:'red'}} primary style={{marginLeft:'30px'}} onClick = {()=>{
+  { this.props.chatService ==='botEngine' && <Button  color='red'   style={{marginLeft:'30px',background:'red'}} onClick = {()=>{
 
     this.props.dispatch({type:'CHAT_TRANSFER_REQUEST_MESSAGE',payload:'botEngine'})
 
