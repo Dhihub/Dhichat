@@ -10,7 +10,7 @@ const initialSigninState = {
     displayName:'',
     uid:''
   },
-  signIn:false
+  signedIn:false
 }
 
 
