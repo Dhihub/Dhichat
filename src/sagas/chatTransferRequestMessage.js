@@ -67,7 +67,7 @@ let groupName2 = getBotGroupName(user.uid,botEngineClientToken,currentChat.uid)
     photoURL: `https://robohash.org/${currentChat.uid}`
 
   }
-const ref = yield firebase.database().ref(`BotGroups/${groupName2}/messages`).push(message2)
+  const ref = yield firebase.database().ref(`BotGroups/${groupName2}/messages`).push(message2)
   const ref2 = yield firebase.database().ref(`BotGroups/${groupName}/messages`).push(message)
 
 }

@@ -16,7 +16,8 @@
 
    messages:[],
    chatList:[],
-   chatGroups:[]
+   chatGroups:[],
+   botGroups:[]
   }
 
 

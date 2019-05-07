@@ -14,7 +14,7 @@ import Signin from './Components/Auth/Signin'
 import {setFirebase,setFirebaseDB } from './actions/firebaseDBactions.js'
 
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-
+import Loading from './Components/Loading/Loading'
 
 
 firebase.initializeApp(config)
@@ -115,7 +115,8 @@ class App extends Component {
 
  }}/>
 
-      <Route exact path ='/chat' component = {Chat}/>
+       <Route exact path ='/chat' component = {Chat}/>
+        <Route exact path ='/loading' component = {Loading}/>
 
       </div>
 

@@ -9,7 +9,8 @@ const initialSigninState = {
   user:{
     displayName:'',
     uid:''
-  }
+  },
+  signIn:false
 }
 
 
@@ -33,11 +34,11 @@ export default  (state =initialSigninState, action={})=>{
 
 
 
-   return {...state,user:action.payload}
+   return {...state,user:action.payload,signedIn:true}
 
    case "SIGN_OUT_SUCCESS":
       console.log('action',action)
-     return {...state,user:action.payload}
+     return {...state,user:action.payload,signedIn:false}
 
 case "SIGNIN_ERROR":
   return {...state,error:action.payload}
